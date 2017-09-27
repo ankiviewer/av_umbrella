@@ -23,7 +23,7 @@ defmodule Anki.Mixfile do
   def application do
     [
       mod: {Anki.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :porcelain]
     ]
   end
 
@@ -37,7 +37,8 @@ defmodule Anki.Mixfile do
   defp deps do
     [
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 2.1"}
+      {:ecto, "~> 2.1"},
+      {:porcelain, "~> 2.0"}
     ]
   end
 

@@ -14,6 +14,7 @@ defmodule Anki.Application do
 
     Supervisor.start_link([
       supervisor(Anki.Repo, []),
+      supervisor(Anki.Node, []),
     ], strategy: :one_for_one, name: Anki.Supervisor)
   end
 end
