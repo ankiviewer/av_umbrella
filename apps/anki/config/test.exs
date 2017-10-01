@@ -9,3 +9,5 @@ config :anki, Anki.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox,
   ownership_timeout: 10 * 60 * 1000
+
+config :anki, :httpoison, Anki.HTTPoison.InMemory
