@@ -7,12 +7,8 @@ defmodule Anki.Node do
     GenServer.start_link __MODULE__, %{}
   end
 
-  def init(state) do
-    start_node_server()
-    {:ok, state}
-  end
-
-  def start_node_server() do
+  def start_server() do
+    IO.puts "Starting Node Server..."
     cmd = "node node_app/server/index.js"
     opts = [out: {:send, self()}]
     %Proc{pid: pid} = Porcelain.spawn_shell(cmd, opts)
@@ -22,12 +18,14 @@ defmodule Anki.Node do
         IO.puts "Node log => #{log}"
       {^pid, :result, %Res{status: _status}} ->
         IO.puts "restarting"
-        stop_current_node_process()
-        start_node_server()
+        stop_current_process()
+        start_server()
     end
   end
 
-  defp stop_current_node_process() do
+  # Stops all node processes
+  defp stop_current_process() do
+    IO.puts "Stopping Node Server..."
     {output, 0} = System.cmd("lsof", ["-i"])
     node_pid =
       output
@@ -35,6 +33,7 @@ defmodule Anki.Node do
       |> Enum.find(&Regex.match?(~r/^node/, &1))
       |> (&Regex.run(~r/^node\s+(\d+)/, &1)).()
       |> Enum.at(1)
-    System.cmd "kill", ["-9", node_pid]
+    {"", 0} = System.cmd "kill", ["-9", node_pid]
+    IO.puts "Node server stopped"
   end
 end
