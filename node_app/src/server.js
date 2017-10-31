@@ -5,6 +5,7 @@ const { db, server } = require('./config.js')
  * @promise {Object{modelId: modelName}}
  */
 const getAllModels = () => new Promise((resolve, reject) => {
+  // db.get('select models, decks, tags, mod from col', (err, {models: _models}) => {
   db.get('select models from col', (err, {models: _models}) => {
     if (err) {
       reject(err);
@@ -26,6 +27,20 @@ const getAllModels = () => new Promise((resolve, reject) => {
  * @promise {Array.Object{}}
  */
 const getAllNotes = (models) => new Promise((resolve, reject) => {
+  // db.all(
+  // `SELECT
+  // notes.mid AS model,
+  // notes.mod AS modied,
+  // notes.tags AS tags,
+  // notes.flds AS flds,
+  // notes.sfld AS sfld,
+  // cards.did AS deckid
+  // FROM
+  // notes
+  // INNER JOIN cards
+  // ON
+  // notes.id = cards.nid`
+  // , (err, notes) => {
   db.all('select mid, flds, sfld from notes', (err, notes) => {
     if (err) {
       reject(err);
