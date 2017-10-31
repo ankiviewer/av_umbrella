@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "start:watch": "nodemon -x 'npm start'",
-    "test": "tape test/*.test.js | faucet",
+    "test": "NODE_ENV=test tape test/*.test.js | faucet",
     "test:debug": "NODE_ENV=test tape test/*.test.js",
     "test:debug:watch": "nodemon -x 'npm run test:debug'",
     "test:watch": "nodemon -x 'npm test'"

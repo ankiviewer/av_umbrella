@@ -16,6 +16,7 @@ const models = {
 
 const notes = [
   {type: 'deen', flds: 'gackernto cluck', sfld: 'to cluck'},
+  // {type: 'deen', english: 'to cluck', german: 'gackern', tags: 'verb verified'},
   {type: 'deen', flds: 'hallohello', sfld: 'hello'},
   {type: 'ende', flds: 'der Saltothe summersault', sfld: 'the summersault'}
 ];

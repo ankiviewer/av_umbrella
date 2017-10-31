@@ -6,7 +6,7 @@ const path = require('path');
 const server = new Hapi.Server();
 server.connection({ port });
 
-const db = process.env.NODE_ENV === 'TEST'
+const db = process.env.NODE_ENV.toUpperCase() === 'TEST'
   ? new sqlite3.Database(':memory:')
   : new sqlite3.Database(
     path.join(
@@ -14,7 +14,7 @@ const db = process.env.NODE_ENV === 'TEST'
       'Library',
       'Application\ Support',
       'Anki2',
-      'User\ 1',
+      'sam',
       'collection.anki2'
     ),
     sqlite3.READ_ONLY
