@@ -1,40 +1,30 @@
 const tape = require('tape');
 const assert = require('assert');
-const dbSetup = require('./schema.js');
+const dbSetup = require('./setup.js');
+const { models, decks, tags, cards, notes, formattedNotes } = require('./models.js');
 const {
   server,
   db,
-  getAllModels,
+  getCollection,
   getAllNotes
 } = require('../src/server.js');
 
-const models = {
-  1234: 'deen',
-  1235: 'ende',
-  1236: 'reverse'
-}
-
-const notes = [
-  {type: 'deen', flds: 'gackernto cluck', sfld: 'to cluck'},
-  // {type: 'deen', english: 'to cluck', german: 'gackern', tags: 'verb verified'},
-  {type: 'deen', flds: 'hallohello', sfld: 'hello'},
-  {type: 'ende', flds: 'der Saltothe summersault', sfld: 'the summersault'}
-];
+const collection = { models, decks, tags, mod: 0 };
 
 tape('setup', (t) => dbSetup().then(t.end));
 
-tape('getAllModels', (t) => {
-  getAllModels()
-    .then((actualModels) => {
-      t.deepEqual(actualModels, models);
+tape('getCollection', (t) => {
+  getCollection()
+    .then((actualCollection) => {
+      t.deepEqual(actualCollection, collection);
       t.end();
     });
 });
 
 tape('getAllNotes', (t) => {
-  getAllNotes(models)
+  getAllNotes(collection)
     .then((actualNotes) => {
-      t.deepEqual(actualNotes, notes);
+      t.deepEqual(actualNotes, formattedNotes);
       t.end();
     })
 });
@@ -52,7 +42,7 @@ tape('GET :: /notes', (t) => {
   server.inject('/notes')
     .then((res) => {
       t.equal(res.statusCode, 200);
-      t.deepEqual(res.payload, JSON.stringify(notes));
+      t.deepEqual(res.payload, JSON.stringify(formattedNotes));
       t.end();
     });
 });
