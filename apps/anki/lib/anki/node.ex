@@ -9,7 +9,7 @@ defmodule Anki.Node do
 
   def start_server() do
     IO.puts "Starting Node Server..."
-    cmd = "node node_app/server/index.js"
+    cmd = "node node_app/src/index.js"
     opts = [out: {:send, self()}]
     %Proc{pid: pid} = Porcelain.spawn_shell(cmd, opts)
 

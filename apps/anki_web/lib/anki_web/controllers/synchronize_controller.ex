@@ -4,10 +4,8 @@ defmodule AnkiWeb.SynchronizeController do
   alias Anki.Node
 
   def index(conn, _params) do
-    IO.puts "Starting server ----"
-    Node.start_server() |> IO.inspect
-    IO.puts "------"
+    Node.start_server()
 
-
+    conn |> json(%{hello: "world"})
   end
 end
