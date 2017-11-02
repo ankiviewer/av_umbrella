@@ -1,4 +1,4 @@
-const { db } = require('../src/server.js');
+const { db } = require('../src/config.js');
 const { models, decks, tags, cards, notes } = require('./models.js'); 
 
 module.exports = () => new Promise((resolve) => {

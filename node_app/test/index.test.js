@@ -1,14 +1,15 @@
 const tape = require('tape');
 const dbSetup = require('./setup.js');
 const { models, decks, tags, formattedNotes } = require('./models.js');
-const { server, getCollection, getAllNotes } = require('../src/server.js');
+const { getCollection, getAllNotes } = require('../src/helpers.js');
+const { server, db } = require('../src/config.js');
 
 const collection = { models, decks, tags, mod: 0 };
 
-tape('setup', (t) => dbSetup().then(t.end));
+tape('setup', (t) => dbSetup(db).then(t.end));
 
 tape('getCollection', (t) => {
-  getCollection()
+  getCollection(db)
     .then((actualCollection) => {
       t.deepEqual(actualCollection, collection);
       t.end();
@@ -16,7 +17,7 @@ tape('getCollection', (t) => {
 });
 
 tape('getAllNotes', (t) => {
-  getAllNotes(collection)
+  getAllNotes(db, collection)
     .then((actualNotes) => {
       t.deepEqual(actualNotes, formattedNotes);
       t.end();

@@ -1,4 +1,5 @@
 const Hapi = require('hapi');
+const routes = require('./roots.js');
 const port = process.env.PORT || 4444;
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
@@ -19,5 +20,7 @@ const db = (process.env.NODE_ENV || '').toUpperCase() === 'TEST'
     ),
     sqlite3.READ_ONLY
   );
+
+server.route(routes(db));
 
 module.exports = { db, server };

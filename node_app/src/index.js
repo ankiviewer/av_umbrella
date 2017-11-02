@@ -1,5 +1,5 @@
 const assert = require('assert');
-const server = require('./server.js');
+const { server } = require('./config.js');
 
 server.start((err) => {
   assert(!err, err);

@@ -1,6 +1,4 @@
-const { db, server } = require('./config.js')
-
-const getCollection = () => new Promise((resolve, reject) => {
+const getCollection = (db) => new Promise((resolve, reject) => {
   db.get(
     'select models, decks, tags, mod from col',
     (err, {models, decks, tags, mod}) => {
@@ -28,7 +26,7 @@ const formatFlds = (flds, sfld) => {
   return f.substring(0, f.lastIndexOf(sfld));
 }
 
-const getAllNotes = (collection) => new Promise((resolve, reject) => {
+const getAllNotes = (db, collection) => new Promise((resolve, reject) => {
   db.all(
   `SELECT
   notes.mid AS mid,
@@ -63,31 +61,4 @@ const getAllNotes = (collection) => new Promise((resolve, reject) => {
   });
 });
 
-/* istanbul ignore next */
-const handleErr = (err) => console.log('ERR: ', err); // eslint-disable-line
-
-const routes = [
-  {
-    method: 'get',
-    path: '/collection',
-    handler: (_request, reply) => {
-      getCollection()
-        .then(reply)
-        .catch(handleErr);
-    }
-  },
-  {
-    method: 'get',
-    path: '/notes',
-    handler: (_request, reply) => {
-      getCollection()
-        .then(getAllNotes)
-        .then(reply)
-        .catch(handleErr);
-    }
-  }
-]
-
-server.route(routes);
-
-module.exports = { server, db, getCollection, getAllNotes }
+module.exports = { getCollection, getAllNotes }
