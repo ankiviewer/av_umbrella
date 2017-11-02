@@ -64,13 +64,19 @@ const getAllNotes = (collection) => new Promise((resolve, reject) => {
 const routes = [
   {
     method: 'get',
-    path: '/',
-    handler: (_request, reply) => reply('Hello World')
+    path: '/collection',
+    handler: (_request, reply) => {
+      getCollection()
+        .then(reply)
+        .catch((err) => {
+          console.log('ERR: ', err);
+        });
+    }
   },
   {
     method: 'get',
     path: '/notes',
-    handler: (request, reply) => {
+    handler: (_request, reply) => {
       getCollection()
         .then(getAllNotes)
         .then(reply)

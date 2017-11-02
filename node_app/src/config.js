@@ -20,6 +20,4 @@ const db = process.env.NODE_ENV.toUpperCase() === 'TEST'
     sqlite3.READ_ONLY
   );
 
-const config = { db, server }
-
-module.exports = config;
+const config = module.exports = { db, server };
