@@ -26,21 +26,25 @@ const cards = [
   {did: 123456},
   {did: 123456},
   {did: 654321}
-].map((c, i) => Object.assign(c, {nid: i + 1}));
-
-const notes = [
-  {mid: 1234, flds: 'gackernto cluck', sfld: 'to cluck'},
-  {mid: 1234, flds: 'hallohello', sfld: 'hello'},
-  {mid: 1235, flds: 'der Saltothe summersault', sfld: 'the summersault'},
-  {mid: 7654, flds: 'Chaiyes', sfld: 'yes'}
-].map((n, i) => Object.assign(n, {id: i + 1}));
+].map((c, i) => Object.assign(c, {nid: i + 1, mod: 0}));
 
 const formattedNotes = [
-  // {type: 'deen', english: 'to cluck', german: 'gackern', tags: 'verb verified'},
-  {type: 'deen', flds: 'gackernto cluck', sfld: 'to cluck'},
-  {type: 'deen', flds: 'hallohello', sfld: 'hello'},
-  {type: 'ende', flds: 'der Saltothe summersault', sfld: 'the summersault'},
-  {type: 'thaidefault', flds: 'Chaiyes', sfld: 'yes'}
-]
+  {model: 'deen', one: 'gackern', two: 'to cluck', tags: 'leech verb', deck: 'DE'},
+  {model: 'deen', one: 'hallo', two: 'hello', deck: 'DE'},
+  {model: 'ende', one: 'der Salto', two: 'the summersault', tags: 'leech', deck: 'DE'},
+  {model: 'thaidefault', one: 'Chai', two: 'yes', deck: 'Thai'}
+].map((n, i) => Object.assign(n, {mod: 0, tags: n.tags || ''}));
+
+const notes = formattedNotes.map((n, i) => ({
+  mid: Object.keys(models)
+    .map((k) => ({mid: k, name: models[k].name}))
+    .filter((m) => m.name === n.model)[0].mid,
+  flds: n.one + n.two,
+  sfld: n.two,
+  tags: n.tags,
+  mod: n.mod,
+  id: i + 1,
+  deck: n.deck
+}));
 
 module.exports = { models, decks, tags, cards, notes, formattedNotes };

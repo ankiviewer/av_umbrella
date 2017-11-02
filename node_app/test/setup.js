@@ -25,15 +25,17 @@ const dbSetup = module.exports = () => new Promise((resolve) => {
       id integer not null,
       mid integer not null,
       flds text not null,
-      sfld text not null
+      sfld text not null,
+      tags text,
+      mod integer not null
       )
     `);
     const noteStmt = db.prepare(`
-      insert into notes (id, mid, flds, sfld)
-      values (?, ?, ?, ?)
+      insert into notes (id, mid, flds, sfld, tags, mod)
+      values (?, ?, ?, ?, ?, 0)
     `);
     notes.forEach((note) => {
-      noteStmt.run([note.id, note.mid, note.flds, note.sfld]);
+      noteStmt.run([note.id, note.mid, note.flds, note.sfld, note.tags]);
     });
     noteStmt.finalize(() => {
       db.serialize(() => {

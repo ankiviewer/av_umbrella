@@ -42,7 +42,7 @@ tape('GET :: /notes', (t) => {
   server.inject('/notes')
     .then((res) => {
       t.equal(res.statusCode, 200);
-      t.deepEqual(res.payload, JSON.stringify(formattedNotes));
+      t.deepEqual(JSON.parse(res.payload), formattedNotes);
       t.end();
     });
 });
