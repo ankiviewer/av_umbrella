@@ -1,7 +1,7 @@
 const { db } = require('../src/server.js');
 const { models, decks, tags, cards, notes } = require('./models.js'); 
 
-const dbSetup = module.exports = () => new Promise((resolve) => {
+module.exports = () => new Promise((resolve) => {
   db.serialize(() => {
     // MODELS
     db.run('drop table if exists col');
@@ -51,7 +51,7 @@ const dbSetup = module.exports = () => new Promise((resolve) => {
           insert into cards (nid, did)
           values (?, ?)
         `);
-        cards.forEach((card, i) => {
+        cards.forEach((card) => {
           cardStmt.run([card.nid, card.did]);
         });
         cardStmt.finalize(resolve);

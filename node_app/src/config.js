@@ -6,7 +6,7 @@ const path = require('path');
 const server = new Hapi.Server();
 server.connection({ port });
 
-const db = process.env.NODE_ENV.toUpperCase() === 'TEST'
+const db = (process.env.NODE_ENV || '').toUpperCase() === 'TEST'
   ? new sqlite3.Database(':memory:')
   : new sqlite3.Database(
     path.join(
@@ -20,4 +20,4 @@ const db = process.env.NODE_ENV.toUpperCase() === 'TEST'
     sqlite3.READ_ONLY
   );
 
-const config = module.exports = { db, server };
+module.exports = { db, server };

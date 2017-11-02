@@ -1,8 +1,7 @@
 const tape = require('tape');
-const assert = require('assert');
 const dbSetup = require('./setup.js');
-const { models, decks, tags, cards, notes, formattedNotes } = require('./models.js');
-const { server, db, getCollection, getAllNotes } = require('../src/server.js');
+const { models, decks, tags, formattedNotes } = require('./models.js');
+const { server, getCollection, getAllNotes } = require('../src/server.js');
 
 const collection = { models, decks, tags, mod: 0 };
 

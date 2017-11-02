@@ -33,7 +33,7 @@ const formattedNotes = [
   {model: 'deen', one: 'hallo', two: 'hello', deck: 'DE'},
   {model: 'ende', one: 'der Salto', two: 'the summersault', tags: 'leech', deck: 'DE'},
   {model: 'thaidefault', one: 'Chai', two: 'yes', deck: 'Thai'}
-].map((n, i) => Object.assign(n, {mod: 0, tags: n.tags || ''}));
+].map((n) => Object.assign(n, {mod: 0, tags: n.tags || ''}));
 
 const notes = formattedNotes.map((n, i) => ({
   mid: Object.keys(models)

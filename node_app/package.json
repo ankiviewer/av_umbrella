@@ -1,5 +1,5 @@
 {
-  "name": "simple-hapi-boilerplate",
+  "name": "anki_viewer",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -9,9 +9,13 @@
     "start:watch": "nodemon -x 'npm start'",
     "test": "NODE_ENV=test tape test/*.test.js | faucet",
     "test:debug": "NODE_ENV=test tape test/*.test.js",
-    "test:debug:watch": "nodemon -x 'npm run test:debug'",
+    "test:inspect": "NODE_ENV=test node --inspect --debug-brk test/index.test.js",
     "test:watch": "nodemon -x 'npm test'",
-    "test:inspect": "NODE_ENV=test node --inspect --debug-brk test/index.test.js"
+    "test:debug:watch": "nodemon -x 'npm run test:debug'",
+    "lint": "eslint .",
+    "lint:watch": "nodemon -x 'npm run lint'",
+    "cover": "NODE_ENV=test istanbul cover tape ./test/*.test.js",
+    "cover:watch": "nodemon -x 'npm run cover'"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +25,14 @@
     "sqlite3": "^3.1.12"
   },
   "devDependencies": {
+    "eslint": "^4.10.0",
     "faucet": "0.0.1",
+    "istanbul": "^0.4.5",
+    "pre-commit": "^1.2.2",
     "tape": "^4.7.0"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "cover"
+  ]
 }

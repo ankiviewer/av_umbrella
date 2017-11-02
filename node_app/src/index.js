@@ -4,5 +4,5 @@ const server = require('./server.js');
 server.start((err) => {
   assert(!err, err);
 
-  console.log('Server running on ' + server.info.uri);
+  console.log('Server running on ' + server.info.uri); // eslint-disable-line
 });

@@ -4,6 +4,7 @@ const getCollection = () => new Promise((resolve, reject) => {
   db.get(
     'select models, decks, tags, mod from col',
     (err, {models, decks, tags, mod}) => {
+      /* istanbul ignore if */
       if (err) {
         reject(err);
         return;
@@ -42,6 +43,7 @@ const getAllNotes = (collection) => new Promise((resolve, reject) => {
   ON
   notes.id = cards.nid`,
   (err, notes) => {
+    /* istanbul ignore if */
     if (err) {
       reject(err);
       return;
@@ -61,6 +63,9 @@ const getAllNotes = (collection) => new Promise((resolve, reject) => {
   });
 });
 
+/* istanbul ignore next */
+const handleErr = (err) => console.log('ERR: ', err); // eslint-disable-line
+
 const routes = [
   {
     method: 'get',
@@ -68,9 +73,7 @@ const routes = [
     handler: (_request, reply) => {
       getCollection()
         .then(reply)
-        .catch((err) => {
-          console.log('ERR: ', err);
-        });
+        .catch(handleErr);
     }
   },
   {
@@ -80,9 +83,7 @@ const routes = [
       getCollection()
         .then(getAllNotes)
         .then(reply)
-        .catch((err) => {
-          console.log('ERR: ', err);
-        });
+        .catch(handleErr);
     }
   }
 ]
