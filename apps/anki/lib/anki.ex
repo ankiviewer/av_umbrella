@@ -7,9 +7,18 @@ defmodule Anki do
   if it comes from the database, an external API or others.
   """
 
-  @httpoison Application.get_env :anki, :httpoison
+  require Poison
+  require HTTPoison
+  alias Anki.Node
 
-  def get_notes() do
+  @root_url "http://localhost:4444"
 
+  def collection do
+    Node.start_server()
+    HTTPoison.get!(@root_url <> "/collection")
+  end
+
+  def notes do
+    HTTPoison.get!(@root_url <> "/notes")
   end
 end
