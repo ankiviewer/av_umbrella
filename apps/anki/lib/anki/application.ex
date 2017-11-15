@@ -13,8 +13,7 @@ defmodule Anki.Application do
     import Supervisor.Spec, warn: false
 
     Supervisor.start_link([
-      supervisor(Anki.Repo, []),
-      supervisor(Anki.Node, []),
+      supervisor(Anki.Repo, [])
     ], strategy: :one_for_one, name: Anki.Supervisor)
   end
 end

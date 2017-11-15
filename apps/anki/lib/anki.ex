@@ -1,24 +1,35 @@
 defmodule Anki do
-  @moduledoc """
-  Anki keeps the contexts that define your domain
-  and business logic.
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
-
   require Poison
   require HTTPoison
-  alias Anki.Node
 
   @root_url "http://localhost:4444"
 
-  def collection do
-    Node.start_server()
-    HTTPoison.get!(@root_url <> "/collection")
+  defp kill_node(), do: System.cmd "pkill", ["node"]
+
+  defp node_result(pid) do
+    receive do
+      {^pid, :data, :out, log} ->
+        IO.puts "Node log => #{log}"
+        cond do
+          String.contains? log, "running" ->
+            HTTPoison.get! @root_url <> "/collection"
+          true ->
+            node_result(pid)
+        end
+    end
   end
 
-  def notes do
-    HTTPoison.get!(@root_url <> "/notes")
+  def collection do
+    kill_node()
+    System.put_env "NODE_ENV", "#{Mix.env}"
+    cmd = "node node_app/src/index.js"
+    opts = [out: {:send, self()}]
+    %Porcelain.Process{pid: pid} = Porcelain.spawn_shell cmd, opts
+
+    result = node_result(pid)
+
+    {"", 0} = kill_node()
+
+    with %HTTPoison.Response{body: body} <- result, do: body
   end
 end

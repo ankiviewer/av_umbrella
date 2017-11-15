@@ -6,6 +6,11 @@ const handleErr = (err) => console.log('ERR: ', err); // eslint-disable-line
 const routes = (db) => [
   {
     method: 'get',
+    path: '/',
+    handler: (request, reply) => reply('hello world')
+  },
+  {
+    method: 'get',
     path: '/collection',
     handler: (_request, reply) => {
       getCollection(db)
