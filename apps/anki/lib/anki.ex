@@ -1,4 +1,8 @@
 defmodule Anki do
+  @moduledoc"""
+  Core library
+  Currently just for interacting with node application
+  """
   require Poison
   require HTTPoison
 
@@ -14,12 +18,9 @@ defmodule Anki do
     receive do
       {^pid, :data, :out, log} ->
         IO.puts "Node log => #{log}"
-        cond do
-          String.contains? log, "running" ->
-            HTTPoison.get! @root_url <> endpoint
-          true ->
-            node_result pid, endpoint
-        end
+        if log =~ "running",
+          do: HTTPoison.get!(@root_url <> endpoint),
+          else: node_result pid, endpoint
     end
   end
 

@@ -40,7 +40,8 @@ defmodule Anki.Mixfile do
       {:ecto, "~> 2.1"},
       {:porcelain, "~> 2.0"},
       {:httpoison, "~> 0.12.0"},
-      {:poison, "~> 2.0"}
+      {:poison, "~> 2.0"},
+      {:mix_test_watch, "~> 0.3", only: :dev, runtime: false}
     ]
   end
 
