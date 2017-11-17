@@ -2,8 +2,8 @@ defmodule AnkiWeb.SynchronizeController do
   use AnkiWeb, :controller
 
   def index(conn, _params) do
-    Anki.request! "/collection"
+    _collection = Anki.request! "/collection"
 
-    conn |> json(%{hello: "world"})
+    json conn, %{"message" => "success"}
   end
 end
