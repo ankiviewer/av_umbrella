@@ -1,4 +1,4 @@
-defmodule Anki.Repo.Migrations.Collection do
+defmodule Anki.Repo.Migrations.CreateCollection do
   use Ecto.Migration
 
   def change do
@@ -10,5 +10,6 @@ defmodule Anki.Repo.Migrations.Collection do
 
       timestamps()
     end
+
   end
 end
