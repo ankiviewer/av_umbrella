@@ -11,6 +11,7 @@ defmodule AnkiTest do
       |> File.read!
       |> Poison.decode!
       |> Map.take(Map.keys actual)
+      |> IO.inspect
 
     assert actual == expected
   end
