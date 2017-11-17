@@ -5,7 +5,7 @@ defmodule AnkiWeb.SynchronizeControllerTest do
 
   test "GET /synchronize", %{conn: conn} do
     actual = conn
-      |> get("/api/synchronize")
+      |> get(synchronize_path conn, :index)
       |> json_response(200)
 
     # expected = Anki.json_model()
