@@ -1,10 +1,8 @@
 defmodule AnkiWeb.SynchronizeController do
   use AnkiWeb, :controller
 
-  alias Anki.Node
-
   def index(conn, _params) do
-    Node.start_server()
+    Anki.request! "/collection"
 
     conn |> json(%{hello: "world"})
   end

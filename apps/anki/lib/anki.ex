@@ -19,6 +19,12 @@ defmodule Anki do
     end
   end
 
+  @doc"""
+  What to request from the node server
+  Example:
+  Anki.request "/collection"
+  Anki.request "/notes"
+  """
   def request!(endpoint) when is_binary endpoint do
     kill_node()
     System.put_env "NODE_ENV", "#{Mix.env}"
@@ -30,6 +36,6 @@ defmodule Anki do
 
     {"", 0} = kill_node()
 
-    with %HTTPoison.Response{body: body} <- result, do: body
+    with %HTTPoison.Response{body: body} <- result, do: Poison.decode! body
   end
 end

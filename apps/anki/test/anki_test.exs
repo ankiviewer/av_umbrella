@@ -6,7 +6,6 @@ defmodule AnkiTest do
   test "/collection" do
     actual = "/collection"
     |> Anki.request!
-    |> Poison.decode!
 
     expected = "node_app/test/models.json"
     |> File.read!
@@ -19,7 +18,6 @@ defmodule AnkiTest do
   test "/notes" do
     actual = "/notes"
     |> Anki.request!
-    |> Poison.decode!
 
     expected = "node_app/test/models.json"
     |> File.read!
