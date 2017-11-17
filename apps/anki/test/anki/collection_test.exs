@@ -1,18 +1,19 @@
 defmodule Anki.CollectionTest do
   use Anki.DataCase, async: false
 
-  alias Anki.Collection
+  alias Anki.{Collection, Repo}
 
   test "Collection" do
-    map = %{
+    attrs = %{
       "decks" => ["DE", "Thai"],
       "mod" => 0,
       "models" => ["deen", "ende", "reverse", "thaidefault"],
       "tags" => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
     }
-    Collection.update map
 
-    actual = %{}
+    changeset = Collection.changeset %Collection{}, attrs
+
+    actual = Repo.insert! changeset
 
     expected = %{}
 

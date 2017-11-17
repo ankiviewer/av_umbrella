@@ -37,8 +37,6 @@ defmodule Anki do
     opts = [out: {:send, self()}]
     %Porcelain.Process{pid: pid} = Porcelain.spawn_shell cmd, opts
 
-    IO.inspect pid
-
     result = node_result pid, endpoint
 
     {"", 0} = kill_node()
