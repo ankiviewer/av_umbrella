@@ -1,6 +1,6 @@
 const { models, decks, tags, cards, formattedNotes } = require('./models.json');
 
-const notes = formattedNotes.map((n, i) => ({
+const notes = formattedNotes.map((n) => ({
   mid: Object.keys(models)
     .map((k) => ({mid: k, name: models[k].name}))
     .filter((m) => m.name === n.model)[0].mid,
@@ -8,7 +8,7 @@ const notes = formattedNotes.map((n, i) => ({
   sfld: n.two,
   tags: n.tags,
   mod: n.mod,
-  id: i + 1,
+  id: n.anki_note_id,
   deck: n.deck
 }));
 

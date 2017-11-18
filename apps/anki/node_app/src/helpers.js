@@ -29,6 +29,7 @@ const formatFlds = (flds, sfld) => {
 const getAllNotes = (db, collection) => new Promise((resolve, reject) => {
   db.all(
   `SELECT
+  notes.id AS anki_note_id,
   notes.mid AS mid,
   notes.tags AS tags,
   notes.flds AS flds,
@@ -49,6 +50,7 @@ const getAllNotes = (db, collection) => new Promise((resolve, reject) => {
     resolve(
       notes.map((note) => {
         return {
+          anki_note_id: note.anki_note_id,
           model: collection.models[note.mid].name,
           one: formatFlds(note.flds, note.sfld),
           two: note.sfld,

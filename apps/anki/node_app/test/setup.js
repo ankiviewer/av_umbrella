@@ -32,10 +32,10 @@ module.exports = () => new Promise((resolve) => {
     `);
     const noteStmt = db.prepare(`
       insert into notes (id, mid, flds, sfld, tags, mod)
-      values (?, ?, ?, ?, ?, 0)
+      values (?, ?, ?, ?, ?, ?)
     `);
     notes.forEach((note) => {
-      noteStmt.run([note.id, note.mid, note.flds, note.sfld, note.tags]);
+      noteStmt.run([note.id, note.mid, note.flds, note.sfld, note.tags, note.mod]);
     });
     noteStmt.finalize(() => {
       db.serialize(() => {

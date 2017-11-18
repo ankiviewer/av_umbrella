@@ -33,7 +33,8 @@
       "two": "to cluck",
       "tags": "leech verb",
       "deck": "DE",
-      "mod": 0
+      "mod": 1507832160,
+      "anki_note_id": 1
     },
     {
       "model": "deen",
@@ -41,7 +42,8 @@
       "two": "hello",
       "deck": "DE",
       "tags": "",
-      "mod": 0
+      "mod": 1507832160,
+      "anki_note_id": 2
     },
     {
       "model": "ende",
@@ -49,7 +51,8 @@
       "two": "the summersault",
       "tags": "leech",
       "deck": "DE",
-      "mod": 0
+      "mod": 1507832160,
+      "anki_note_id": 3
     },
     {
       "model": "thaidefault",
@@ -57,7 +60,8 @@
       "two": "yes",
       "deck": "Thai",
       "tags": "",
-      "mod": 0
+      "mod": 1507832160,
+      "anki_note_id": 4
     }
   ]
 }
