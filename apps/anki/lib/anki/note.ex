@@ -27,26 +27,49 @@ defmodule Anki.Note do
   end
 
   @doc"""
+  iex>format(%{one: "hello", tags: "hello world", mod: 123456})
+  %{one: "hello", tags: ["hello", "world"], mod: ~D[2017-01-01]}
+  iex>format(%{one: "hello", tags: ["hello", "world"], mod: ~D[2017-01-01]})
+  %{one: "hello", tags: ["hello", "world"], mod: ~D[2017-01-01]}
+  """
+  def format(map) do
+    map
+    |> Map.new(
+      fn {k, v} ->
+        case is_binary(k) do
+          true -> {String.to_atom(k), v}
+          false -> {k, v}
+        end
+      end
+    )
+    |> Map.new(
+      fn {k, v} ->
+        case k do
+          :tags -> {
+            k,
+            if is_list(v) do
+              v
+            else
+              String.split(v)
+            end
+          }
+          :mod -> {k, ~D[2017-01-01]}
+          _ -> {k, v}
+        end
+      end
+    )
+  end
+
+  @doc"""
   Takes a list of notes and updates the note table with this data
   This shouldn't duplicate notes in the database
   """
   def update!(attrs) do
     attrs
-    |> Enum.map(
+    |> Enum.each(
       fn n ->
         %Note{}
-        |> Note.changeset(
-          Map.new(
-            n,
-            fn {k, v} ->
-              case k do
-                :tags -> {k, String.split(v)}
-                :mod -> {k, ~D[2017-01-01]}
-                _ -> {k, v}
-              end
-            end
-          )
-        )
+        |> Note.changeset(format(n))
         |> Repo.insert!
       end
     )
