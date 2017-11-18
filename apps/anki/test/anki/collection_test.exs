@@ -3,31 +3,44 @@ defmodule Anki.CollectionTest do
 
   alias Anki.{Collection, Repo, TestHelpers}
 
-  test "Collection.update" do
-    attrs = %{
-      :decks => ["DE", "Thai"],
-      :mod => ~D[2000-01-01],
-      :models => ["deen", "ende", "reverse", "thaidefault"],
-      :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
-    }
+  describe "Collection.update" do
+    test "without initial collection data" do
+      attrs = %{
+        :decks => ["DE", "Thai"],
+        :mod => ~D[2000-01-01],
+        :models => ["deen", "ende", "reverse", "thaidefault"],
+        :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
+      }
 
-    Collection.update! attrs
+      Collection.update! attrs
 
-    actual = Collection |> Repo.one! |> TestHelpers.sanitize
-    expected = %Collection{} |> Map.merge(attrs) |> TestHelpers.sanitize
-    assert actual == expected
+      actual = Collection |> Repo.one! |> TestHelpers.sanitize
+      expected = %Collection{} |> Map.merge(attrs) |> TestHelpers.sanitize
+      assert actual == expected
+    end
 
-    new_attrs = %{
-      :decks => ["DE"],
-      :mod => ~D[2000-01-01],
-      :models => ["deen", "ende", "reverse", "thaidefault", "other"],
-      :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
-    }
+    test "with initial collection data" do
+      attrs = %{
+        :decks => ["DE", "Thai"],
+        :mod => ~D[2000-01-01],
+        :models => ["deen", "ende", "reverse", "thaidefault"],
+        :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
+      }
 
-    Collection.update! new_attrs
-    actual = Collection |> Repo.one! |> TestHelpers.sanitize
-    expected = %Collection{} |> Map.merge(new_attrs) |> TestHelpers.sanitize
+      Collection.update! attrs
 
-    assert actual == expected
+      new_attrs = %{
+        :decks => ["DE"],
+        :mod => ~D[2000-01-01],
+        :models => ["deen", "ende", "reverse", "thaidefault", "other"],
+        :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
+      }
+
+      Collection.update! new_attrs
+      actual = Collection |> Repo.one! |> TestHelpers.sanitize
+      expected = %Collection{} |> Map.merge(new_attrs) |> TestHelpers.sanitize
+
+      assert actual == expected
+    end
   end
 end
