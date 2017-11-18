@@ -1,8 +1,8 @@
 defmodule Anki.Note do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias Anki.Note
-
 
   schema "notes" do
     field :deck, :string
@@ -17,9 +17,10 @@ defmodule Anki.Note do
   end
 
   @doc false
+  @attrs [:model, :deck, :tags, :mod, :one, :two, :rules_status]
   def changeset(%Note{} = note, attrs) do
     note
-    |> cast(attrs, [:model, :deck, :tags, :mod, :one, :two, :rules_status])
-    |> validate_required([:model, :deck, :tags, :mod, :one, :two, :rules_status])
+    |> cast(attrs, @attrs)
+    |> validate_required(@attrs)
   end
 end
