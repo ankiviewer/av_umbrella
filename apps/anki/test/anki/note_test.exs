@@ -12,16 +12,16 @@ defmodule Anki.NoteTest do
       |> File.read!
       |> Poison.decode!
       |> Map.fetch!("formattedNotes")
-      |> Enum.map(&Note.format/1)
 
       Note.update! notes
 
       actual = Note
       |> Repo.all
       |> TestHelpers.sanitize
-      |> Enum.map(&Map.drop(&1, [:rules_status]))
+      |> Enum.map(&Map.drop &1, [:rules_status])
 
       expected = notes
+      |> Note.format
       |> TestHelpers.sanitize
 
       assert actual == expected
