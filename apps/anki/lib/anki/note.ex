@@ -54,6 +54,10 @@ defmodule Anki.Note do
   This shouldn't duplicate notes in the database
   """
   def update!(notes) when is_list(notes) do
+    # TODO: check collection is also up to date and update this if not
+    for old_note <- Repo.all(Note),
+      do: Repo.delete! old_note
+
     for note <- notes do
       with note <- format(note),
         do: %Note{} |> Note.changeset(note) |> Repo.insert!

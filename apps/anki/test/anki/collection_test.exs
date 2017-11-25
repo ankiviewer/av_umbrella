@@ -16,6 +16,7 @@ defmodule Anki.CollectionTest do
 
       actual = Collection |> Repo.one! |> TestHelpers.sanitize
       expected = %Collection{} |> Map.merge(attrs) |> TestHelpers.sanitize
+
       assert actual == expected
     end
 
@@ -37,6 +38,7 @@ defmodule Anki.CollectionTest do
       }
 
       Collection.update! new_attrs
+
       actual = Collection |> Repo.one! |> TestHelpers.sanitize
       expected = %Collection{} |> Map.merge(new_attrs) |> TestHelpers.sanitize
 
