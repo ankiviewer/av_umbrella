@@ -8,15 +8,15 @@ defmodule Anki.TestHelpers do
     |> handle_mod
   end
 
+  @doc"""
+  Removes microseconds from naive_datetime
+  """
   def handle_mod(map) do
     Map.new map, fn {k, v} ->
       case k do
-        :mod -> {k, remove_microseconds(v)}
+        :mod -> {k, Map.drop(v, [:microsecond])}
         _ -> {k, v}
       end
     end
   end
-
-  def remove_microseconds(struct),
-    do: Map.drop struct, [:microsecond]
 end

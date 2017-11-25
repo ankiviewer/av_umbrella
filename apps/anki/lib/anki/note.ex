@@ -27,26 +27,19 @@ defmodule Anki.Note do
   end
 
   @doc"""
-  iex>format(%{one: "hello", tags: "hello world", mod: 1486035766})
+  iex>format(%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766})
   %{one: "hello", tags: ["hello", "world"], mod: ~N[2017-02-02 11:42:46]}
-  iex>format([%{one: "hello", tags: "hello world", mod: 1486035766}])
+  iex>format([%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766}])
   [%{one: "hello", tags: ["hello", "world"], mod: ~N[2017-02-02 11:42:46]}]
   """
   def format(map) when is_map(map) do
     map
-    |> Map.new(
-      fn {k, v} ->
-        case is_binary(k) do
-          true -> {String.to_atom(k), v}
-          false -> {k, v}
-        end
-      end
-    )
+    |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
     |> Map.new(
       fn {k, v} ->
         case k do
-          :tags -> {k, if is_binary(v) do String.split(v) else v end}
-          :mod -> {k, DateTime.to_naive(DateTime.from_unix!(v))}
+          :tags -> {k, String.split v}
+          :mod -> {k, v |> DateTime.from_unix! |> DateTime.to_naive}
           _ -> {k, v}
         end
       end
@@ -60,14 +53,10 @@ defmodule Anki.Note do
   Takes a list of notes and updates the note table with this data
   This shouldn't duplicate notes in the database
   """
-  def update!(attrs) do
-    attrs
-    |> Enum.each(
-      fn n ->
-        %Note{}
-        |> Note.changeset(format(n))
-        |> Repo.insert!
-      end
-    )
+  def update!(notes) when is_list(notes) do
+    for note <- notes do
+      with note <- format(note),
+        do: %Note{} |> Note.changeset(note) |> Repo.insert!
+    end
   end
 end

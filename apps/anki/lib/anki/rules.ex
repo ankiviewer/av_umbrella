@@ -27,6 +27,9 @@ defmodule Anki.Rule do
   end
 
   def rule_1(deck, card) do
-    Enum.any? deck, &(&1.one == card.one && &1.anki_note_id != card.anki_note_id)
+    Enum.any?(
+      deck,
+      &(&1.one == card.one and &1.anki_note_id != card.anki_note_id)
+    )
   end
 end
