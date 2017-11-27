@@ -12,7 +12,7 @@ defmodule Anki.Note do
     field :rules_status, {:array, :string}
     field :tags, {:array, :string}
     field :two, :string
-    field :anki_note_id, :integer
+    field :anki_note_id, :string
 
     timestamps()
   end
@@ -40,6 +40,7 @@ defmodule Anki.Note do
         case k do
           :tags -> {k, String.split v}
           :mod -> {k, "#{v}"}
+          :anki_note_id -> {k, "#{v}"}
           _ -> {k, v}
         end
       end

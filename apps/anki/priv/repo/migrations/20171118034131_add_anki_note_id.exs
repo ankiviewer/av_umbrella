@@ -3,7 +3,7 @@ defmodule Anki.Repo.Migrations.AddAnkiNoteId do
 
   def change do
     alter table(:notes) do
-      add :anki_note_id, :integer
+      add :anki_note_id, :string
     end
   end
 end
