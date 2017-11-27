@@ -6,7 +6,7 @@ defmodule Anki.Collection do
 
   schema "collection" do
     field :decks, {:array, :string}
-    field :mod, :date
+    field :mod, :naive_datetime
     field :models, {:array, :string}
     field :tags, {:array, :string}
 
@@ -14,7 +14,7 @@ defmodule Anki.Collection do
   end
 
   @doc false
-  @attrs [:decks, :mod, :models, :tags]
+  @attrs ~w(decks mod models tags)a
   def changeset(%Collection{} = collection, attrs) do
     collection
     |> cast(attrs, @attrs)
@@ -26,14 +26,43 @@ defmodule Anki.Collection do
   If there is no collection it creates it
   If a collection exists, it replaces it
   """
-  def update!(attrs) do
+  def update!(collection) do
     Collection
     |> Repo.one
     |> case do
       nil -> %Collection{}
-      collection -> collection
+      coll -> coll
     end
-    |> Collection.changeset(attrs)
+    |> Collection.changeset(collection)
     |> Repo.insert_or_update!
+  end
+
+  def format_decks(decks) do
+    decks
+    |> Map.values
+    |> Enum.map(fn %{"name" => n} -> n end)
+    |> Enum.filter(&(&1 != "Default"))
+  end
+  def format_models(models),
+    do: format_decks models
+  def format_tags(tags),
+    do: Map.keys tags
+  def format_mod(mod),
+    do: mod |> DateTime.from_unix! |> DateTime.to_naive
+
+  def format(collection_request) do
+    collection_request
+    |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
+    |> Map.new(
+      fn {k, v} ->
+        case k do
+          :decks -> {k, format_decks v}
+          :models -> {k, format_models v}
+          :tags -> {k, format_tags v}
+          :mod -> {k, format_mod v}
+          _ -> {k, v}
+        end
+      end
+    )
   end
 end

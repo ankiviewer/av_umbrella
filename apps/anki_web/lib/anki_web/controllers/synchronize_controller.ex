@@ -1,9 +1,18 @@
 defmodule AnkiWeb.SynchronizeController do
   use AnkiWeb, :controller
 
-  def index(conn, _params) do
-    _collection = Anki.request! "/collection"
+  @types ~w(collection notes)
+
+  def create(conn, %{"type" => type}) when type in @types do
+    IO.puts "Synchronizing #{type}"
+    
+    "/#{type}"
+    |> Anki.request!
+    |> Anki.update!(type)
 
     json conn, %{"message" => "success"}
   end
+
+  def create(_conn, %{"type" => type}),
+    do: raise ArgumentError, message: ~s(Expected type to be one of ["#{@types |> Enum.join("\", \"")}"]. Was given %{"type" => "#{type}"})
 end

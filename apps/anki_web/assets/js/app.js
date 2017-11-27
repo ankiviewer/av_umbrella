@@ -19,3 +19,36 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+console.log('hello world');
+
+function sync(type) {
+  if (['notes', 'collection'].indexOf(type) === -1) {
+    console.log('Choose a correct type');
+    console.log('Instead got: ', type);
+    return;
+  }
+
+  var xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        console.log('Successfully synchronized ' + type + '!');
+      } else {
+        console.log('Error: ', xhr.status);
+      }
+    }
+  }
+
+  xhr.open('post', '/api/synchronize');
+
+  xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+  xhr.setRequestHeader('x-csrf-token', csrfToken)
+
+  xhr.send(JSON.stringify({ type }));
+}
+
+sync('collection');
+
+// setTimeout(function () { sync('notes'); }, 4000);
+

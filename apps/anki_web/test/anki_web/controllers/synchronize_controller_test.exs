@@ -5,15 +5,18 @@ defmodule AnkiWeb.SynchronizeControllerTest do
 
   test "GET /synchronize", %{conn: conn} do
     actual = conn
-      |> get(synchronize_path conn, :index)
+      |> post(synchronize_path conn, :create, %{"type" => "collection"})
       |> json_response(200)
 
-    # expected = Anki.json_model()
-    #   |> File.read!
-    #   |> Poison.decode!
-    #   |> Map.take(Map.keys actual)
     expected = %{"message" => "success"}
 
     assert actual == expected
+
+    # TODO: Also test for db updating correctly
+    #
+    # expected = Anki.json_model()
+    #   |> File.read!
+    #   |> Poison.decode!
+    #   |> Map.take(Map.keys actual)
   end
 end

@@ -6,6 +6,8 @@ defmodule Anki do
   require Poison
   require HTTPoison
 
+  alias Anki.{Collection, Note}
+
   @root_url "http://localhost:4444"
 
   def json_model,
@@ -30,7 +32,7 @@ defmodule Anki do
   Anki.request "/collection"
   Anki.request "/notes"
   """
-  def request!(endpoint) when is_binary endpoint do
+  def request!(endpoint) when endpoint in ~w(/collection /notes) do
     kill_node()
     System.put_env "NODE_ENV", "#{Mix.env}"
     cmd = "node #{__DIR__}/../node_app/src/index.js"
@@ -43,4 +45,9 @@ defmodule Anki do
 
     with %HTTPoison.Response{body: body} <- result, do: Poison.decode! body
   end
+
+  def update!(attrs, "collection"),
+    do: attrs |> Collection.format |> Collection.update!
+  def update!(attrs, "notes"),
+    do: Note.update! attrs
 end
