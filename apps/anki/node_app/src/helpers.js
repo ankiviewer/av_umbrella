@@ -23,7 +23,8 @@ const formatFlds = (flds, sfld) => {
     .filter((str) => {
       return [sfld, ''].indexOf(str) === -1
     })[0];
-  return f.substring(0, f.lastIndexOf(sfld));
+
+  return f;
 }
 
 const getAllNotes = (db, collection) => new Promise((resolve, reject) => {
@@ -63,4 +64,4 @@ const getAllNotes = (db, collection) => new Promise((resolve, reject) => {
   });
 });
 
-module.exports = { getCollection, getAllNotes }
+module.exports = { getCollection, getAllNotes, formatFlds }

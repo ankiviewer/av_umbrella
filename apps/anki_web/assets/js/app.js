@@ -28,6 +28,8 @@ function sync(type) {
     return;
   }
 
+  console.log('Syncing ' + type);
+
   var xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function () {
@@ -50,5 +52,5 @@ function sync(type) {
 
 sync('collection');
 
-// setTimeout(function () { sync('notes'); }, 4000);
+setTimeout(function () { sync('notes'); }, 4000);
 

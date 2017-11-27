@@ -1,7 +1,7 @@
 const tape = require('tape');
 const dbSetup = require('./setup.js');
 const { models, decks, tags, formattedNotes } = require('./models.js');
-const { getCollection, getAllNotes } = require('../src/helpers.js');
+const { getCollection, getAllNotes, formatFlds } = require('../src/helpers.js');
 const { server, db } = require('../src/config.js');
 
 const collection = { models, decks, tags, mod: 0 };
@@ -40,5 +40,16 @@ tape('GET :: /notes', (t) => {
       t.deepEqual(JSON.parse(res.payload), formattedNotes);
       t.end();
     });
+});
+
+tape('formatFlds', (t) => {
+  const flds = 'plaudern\u001fto chat';
+  const sfld = 'to chat';
+
+  const actual = formatFlds(flds, sfld);
+  const expected = 'plaudern';
+
+  t.equal(actual, expected);
+  t.end();
 });
 
