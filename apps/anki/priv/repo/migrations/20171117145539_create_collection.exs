@@ -4,7 +4,7 @@ defmodule Anki.Repo.Migrations.CreateCollection do
   def change do
     create table(:collection) do
       add :decks, {:array, :string}
-      add :mod, :naive_datetime
+      add :mod, :string
       add :models, {:array, :string}
       add :tags, {:array, :string}
 

@@ -75,7 +75,7 @@ defmodule Anki.CollectionTest do
       actual = Collection.format(collection_request)
       expected = %{
         :decks => ["DE", "Thai"],
-        :mod => ~N[2017-10-12 18:16:00],
+        :mod => "1507832160",
         :models => ["deen", "ende", "reverse", "thaidefault"],
         :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech", "verified-by-vanessa"]
       }
@@ -87,7 +87,7 @@ defmodule Anki.CollectionTest do
     test "without initial collection data" do
       attrs = %{
         :decks => ["DE", "Thai"],
-        :mod => ~N[2017-10-12 18:16:00],
+        :mod => "1507832160",
         :models => ["deen", "ende", "reverse", "thaidefault"],
         :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
       }
@@ -103,7 +103,7 @@ defmodule Anki.CollectionTest do
     test "with initial collection data" do
       attrs = %{
         :decks => ["DE", "Thai"],
-        :mod => ~N[2017-10-12 18:16:00],
+        :mod => "1507832160",
         :models => ["deen", "ende", "reverse", "thaidefault"],
         :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
       }
@@ -112,7 +112,7 @@ defmodule Anki.CollectionTest do
 
       new_attrs = %{
         :decks => ["DE"],
-        :mod => ~N[2017-10-12 18:16:00],
+        :mod => "1507832160",
         :models => ["deen", "ende", "reverse", "thaidefault", "other"],
         :tags => ["sentence", "marked", "duplicate", "verb", "to-restructure", "leech"]
       }

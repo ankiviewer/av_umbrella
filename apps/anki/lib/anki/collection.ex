@@ -6,14 +6,13 @@ defmodule Anki.Collection do
 
   schema "collection" do
     field :decks, {:array, :string}
-    field :mod, :naive_datetime
+    field :mod, :string
     field :models, {:array, :string}
     field :tags, {:array, :string}
 
     timestamps()
   end
 
-  @doc false
   @attrs ~w(decks mod models tags)a
   def changeset(%Collection{} = collection, attrs) do
     collection
@@ -47,8 +46,6 @@ defmodule Anki.Collection do
     do: format_decks models
   def format_tags(tags),
     do: Map.keys tags
-  def format_mod(mod),
-    do: mod |> DateTime.from_unix! |> DateTime.to_naive
 
   def format(collection_request) do
     collection_request
@@ -59,7 +56,7 @@ defmodule Anki.Collection do
           :decks -> {k, format_decks v}
           :models -> {k, format_models v}
           :tags -> {k, format_tags v}
-          :mod -> {k, format_mod v}
+          :mod -> {k, "#{v}"}
           _ -> {k, v}
         end
       end

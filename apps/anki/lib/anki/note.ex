@@ -6,7 +6,7 @@ defmodule Anki.Note do
 
   schema "notes" do
     field :deck, :string
-    field :mod, :naive_datetime
+    field :mod, :string
     field :model, :string
     field :one, :string
     field :rules_status, {:array, :string}
@@ -28,9 +28,9 @@ defmodule Anki.Note do
 
   @doc"""
   iex>format(%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766})
-  %{one: "hello", tags: ["hello", "world"], mod: ~N[2017-02-02 11:42:46]}
+  %{one: "hello", tags: ["hello", "world"], mod: "1486035766"}
   iex>format([%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766}])
-  [%{one: "hello", tags: ["hello", "world"], mod: ~N[2017-02-02 11:42:46]}]
+  [%{one: "hello", tags: ["hello", "world"], mod: "1486035766"}]
   """
   def format(map) when is_map(map) do
     map
@@ -39,7 +39,7 @@ defmodule Anki.Note do
       fn {k, v} ->
         case k do
           :tags -> {k, String.split v}
-          :mod -> {k, v |> DateTime.from_unix! |> DateTime.to_naive}
+          :mod -> {k, "#{v}"}
           _ -> {k, v}
         end
       end

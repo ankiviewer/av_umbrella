@@ -6,7 +6,7 @@ defmodule Anki.Repo.Migrations.CreateNotes do
       add :model, :string
       add :deck, :string
       add :tags, {:array, :string}
-      add :mod, :naive_datetime
+      add :mod, :string
       add :one, :string
       add :two, :string
       add :rules_status, {:array, :string}
