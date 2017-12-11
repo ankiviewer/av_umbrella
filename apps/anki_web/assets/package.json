@@ -1,18 +1,24 @@
 {
+  "description": "front end for anki_viewer_umbrella",
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "deploy": "brunch build --production",
-    "watch": "brunch watch --stdin"
+    "build": "npm run build:js && npm run build:elm && npm run build:css && npm run build:static",
+    "build:js": "rollup -f cjs js/app.js -o ../priv/static/js/app.js -m",
+    "build:elm": "elm-make elm/Main.elm --output ../priv/static/js/elm.js",
+    "build:css": "sass css/main.scss:../priv/static/css/app.css",
+    "build:static": "cp -R static/* ../priv/static",
+    "watch:js": "nodemon -w js -x 'npm run build:js'",
+    "watch:elm": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
+    "watch:css": "sass --watch css/main.scss:../priv/static/css/app.css"
   },
   "dependencies": {
-    "phoenix": "file:../../../deps/phoenix",
-    "phoenix_html": "file:../../../deps/phoenix_html"
+    "hamburgers": "^0.9.1",
+    "rollup": "^0.52.1",
+    "tachyons-sass": "^4.8.1"
   },
   "devDependencies": {
-    "babel-brunch": "6.1.1",
-    "brunch": "2.10.9",
-    "clean-css-brunch": "2.10.0",
-    "uglify-js-brunch": "2.10.0"
+    "elm-live": "^2.7.5",
+    "nodemon": "^1.12.5"
   }
 }

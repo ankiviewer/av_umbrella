@@ -9,9 +9,9 @@ defmodule Anki do
   alias Anki.{Collection, Note}
 
   @root_url "http://localhost:4444"
+  @home __DIR__ <> "/.."
 
-  def json_model,
-    do: "#{__DIR__}/../node_app/test/models.json"
+  def json_model, do: @home <> "/node_app/test/models.json"
 
   defp kill_node,
     do: System.cmd "pkill", ["node"]
@@ -35,7 +35,7 @@ defmodule Anki do
   def request!(endpoint) when endpoint in ~w(/collection /notes) do
     kill_node()
     System.put_env "NODE_ENV", "#{Mix.env}"
-    cmd = "node #{__DIR__}/../node_app/src/index.js"
+    cmd = "node #{@home}/node_app/src/index.js"
     opts = [out: {:send, self()}]
     %Porcelain.Process{pid: pid} = Porcelain.spawn_shell cmd, opts
 

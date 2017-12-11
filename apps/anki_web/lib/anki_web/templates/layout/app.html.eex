@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Anki!</title>
+    <title>Anki Viewer</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -15,11 +15,26 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
+          <div class="dn-ns vh-100">
+            <div class="bb bw2 b--dark-grey bg-light-grey">
+              <div class="hamburger hamburger--spring">
+                <span class="hamburger-box">
+                  <span class="hamburger-inner"></span>
+                </span>
+              </div>
+              <h1 class="fr w-50 ma0 pa2 dark-grey">Home</h1>
+            </div>
+            <div class="mobile-navbar-menu relative right-100 h-100 bg-light-grey">
+              <div class="h-50">
+                <%= for {text, link} <- [{"Home", "/"}, {"Search", "/search"}, {"Rules", "/rules"}, {"Settings", "/settings"}] do %>
+                  <div class="h-20 pa3 pl4 f4">
+                    <%= link text, to: link, class: "link black pa3 b" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </nav>
-        <span class="logo"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
@@ -36,5 +51,6 @@
     </script>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/elm.js") %>"></script>
   </body>
 </html>
