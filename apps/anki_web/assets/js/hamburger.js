@@ -1,6 +1,10 @@
-var hamburger = document.querySelector('.hamburger');
+import { select } from './utils.js';
+
+var hamburger = select('.hamburger');
 
 hamburger.addEventListener('click', function () {
   hamburger.classList.toggle('is-active');
-  document.querySelector('.mobile-navbar-menu').classList.toggle('right-100');
+  select('.mobile-navbar-menu').classList.toggle('right-100');
 });
+
+document.querySelector('.mobile-navbar-menu').style.height = (document.querySelector('.mobile-navbar-menu').clientHeight - document.querySelector('header.header').clientHeight) + 'px';

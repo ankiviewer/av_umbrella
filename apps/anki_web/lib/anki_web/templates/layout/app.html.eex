@@ -30,11 +30,7 @@
 
       <div class="mobile-navbar-menu vh-100 bg-light-grey absolute right-100 w-100">
         <div class="h-50">
-          <%= for {text, link} <- [
-            {"Home", "/"},
-            {"Search", "/search"},
-            {"Rules", "/rules"},
-            {"Settings", "/settings"}] do %>
+          <%= for {link, text} <- Enum.to_list(LayoutView.views()) do %>
             <div class="h-20 pa3 pl4 f4">
               <%= link text, to: link, class: "link black pa3 b" %>
             </div>
@@ -46,7 +42,6 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
-        <% IO.inspect @conn.request_path %>
         <%= render @view_module, @view_template, assigns %>
       </main>
 
