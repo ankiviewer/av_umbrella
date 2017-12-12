@@ -3,11 +3,7 @@ defmodule AnkiWeb.PageController do
 
   alias AnkiWeb.LayoutView
 
-  def index(conn, _params) do
-    render conn, "index.html"
-  end
-
-  def show(conn, %{"id" => "styleguide"}) do
+  def styleguide(conn, _params) do
     render conn, "styleguide.html",
       layout: {LayoutView, "plain.html"}
   end

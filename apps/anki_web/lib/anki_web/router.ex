@@ -16,7 +16,11 @@ defmodule AnkiWeb.Router do
   scope "/", AnkiWeb do
     pipe_through :browser # Use the default browser stack
 
-    resources "/", PageController, only: [:index, :show]
+    get "/", HomeController, :index
+    get "/styleguide", PageController, :styleguide
+    resources "/search", SearchController, only: [:index]
+    resources "/rules", RulesController, only: [:index]
+    resources "/settings", SettingsController, only: [:index]
   end
 
   scope "/api", AnkiWeb do

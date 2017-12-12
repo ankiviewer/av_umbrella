@@ -15,7 +15,7 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
-          <div class="dn-ns vh-100">
+          <div class="dn-ns">
             <div class="bb bw2 b--dark-grey bg-light-grey">
               <div class="hamburger hamburger--spring">
                 <span class="hamburger-box">
@@ -24,23 +24,29 @@
               </div>
               <h1 class="fr w-50 ma0 pa2 dark-grey">Home</h1>
             </div>
-            <div class="mobile-navbar-menu relative right-100 h-100 bg-light-grey">
-              <div class="h-50">
-                <%= for {text, link} <- [{"Home", "/"}, {"Search", "/search"}, {"Rules", "/rules"}, {"Settings", "/settings"}] do %>
-                  <div class="h-20 pa3 pl4 f4">
-                    <%= link text, to: link, class: "link black pa3 b" %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
           </div>
         </nav>
       </header>
+
+      <div class="mobile-navbar-menu vh-100 bg-light-grey absolute right-100 w-100">
+        <div class="h-50">
+          <%= for {text, link} <- [
+            {"Home", "/"},
+            {"Search", "/search"},
+            {"Rules", "/rules"},
+            {"Settings", "/settings"}] do %>
+            <div class="h-20 pa3 pl4 f4">
+              <%= link text, to: link, class: "link black pa3 b" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
+        <% IO.inspect @conn.request_path %>
         <%= render @view_module, @view_template, assigns %>
       </main>
 
