@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Anki Viewer</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="<%= static_path @conn, "/css/app.css" %>">
   </head>
 
   <body>
@@ -22,7 +22,9 @@
                   <span class="hamburger-inner"></span>
                 </span>
               </div>
-              <h1 class="fr w-50 ma0 pa2 dark-grey">Home</h1>
+              <h1 class="fr w-50 ma0 pa2 dark-grey">
+                <%= LayoutView.view_name @conn %>
+              </h1>
             </div>
           </div>
         </nav>
@@ -38,8 +40,8 @@
         </div>
       </div>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <p class="alert alert-info" role="alert"><%= get_flash @conn, :info %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash @conn, :error %></p>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
