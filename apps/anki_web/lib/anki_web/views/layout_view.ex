@@ -8,7 +8,11 @@ defmodule AnkiWeb.LayoutView do
     "/settings" => "Settings"
   }
 
-  def views, do: @views_map
+  def views(%{request_path: request_path} = _conn) do
+    @views_map
+    |> Enum.to_list
+    |> Enum.map(fn {link, text} -> {link, text, link == request_path} end)
+  end
 
   def view_name(%{request_path: request_path} = _conn),
     do: @views_map[request_path]
