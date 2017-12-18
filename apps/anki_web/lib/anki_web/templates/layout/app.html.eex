@@ -15,8 +15,9 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
-          <div class="dn-ns">
-            <div class="bb bw2 b--dark-grey bg-light-grey">
+          <div class="bb bw2 b--dark-grey bg-light-grey">
+
+            <div class="dn-ns">
               <div class="hamburger hamburger--spring">
                 <span class="hamburger-box">
                   <span class="hamburger-inner"></span>
@@ -26,14 +27,15 @@
                 <%= LayoutView.view_name @conn %>
               </h1>
             </div>
-          </div>
 
-          <div class="bb bw2 b--dark-grey bg-light-grey dn flex-ns justify-center pa1">
-            <%= for {link, text} <- Enum.to_list(LayoutView.views()) do %>
-              <div class="f4 flex items-center justify-around">
-                <%= link text, to: link, class: "link black pa3 b" %>
-              </div>
-            <% end %>
+            <div class="dn flex-ns justify-center pa1">
+              <%= for {link, text} <- Enum.to_list(LayoutView.views()) do %>
+                <div class="f4 flex items-center justify-around">
+                  <%= link text, to: link, class: "link black pa3 b" %>
+                </div>
+              <% end %>
+            </div>
+
           </div>
         </nav>
       </header>
