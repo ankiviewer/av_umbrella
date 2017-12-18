@@ -28,7 +28,7 @@
         </nav>
       </header>
 
-      <div class="mobile-navbar-menu vh-100 bg-light-grey absolute right-100 w-100">
+      <div class="mobile-navbar-menu vh-100 bg-light-grey absolute right-100 w-100 dn-ns">
         <div class="h-50">
           <%= for {link, text} <- Enum.to_list(LayoutView.views()) do %>
             <div class="h-20 pa3 pl4 f4">

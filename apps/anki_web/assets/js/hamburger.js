@@ -7,4 +7,9 @@ hamburger.addEventListener('click', function () {
   select('.mobile-navbar-menu').classList.toggle('right-100');
 });
 
-document.querySelector('.mobile-navbar-menu').style.height = (document.querySelector('.mobile-navbar-menu').clientHeight - document.querySelector('header.header').clientHeight) + 'px';
+function resizeHamburger() {
+  document.querySelector('.mobile-navbar-menu').style.height = (window.innerHeight - document.querySelector('header.header').clientHeight) + 'px';
+}
+
+window.addEventListener('load', resizeHamburger);
+window.addEventListener('resize', resizeHamburger);

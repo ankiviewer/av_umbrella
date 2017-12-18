@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
 const routes = require('./roots.js');
-const port = process.env.PORT || 4444;
+const port = process.env.PORT || 5555;
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 

@@ -8,7 +8,7 @@ defmodule Anki do
 
   alias Anki.{Collection, Note}
 
-  @root_url "http://localhost:4444"
+  @root_url "http://localhost:5555"
   @home __DIR__ <> "/.."
 
   def json_model, do: @home <> "/node_app/test/models.json"
