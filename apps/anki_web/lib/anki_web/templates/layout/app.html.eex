@@ -53,7 +53,7 @@
       <p class="alert alert-info" role="alert"><%= get_flash @conn, :info %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash @conn, :error %></p>
 
-      <main role="main">
+      <main role="main" class="pa3 ph5 center mw6">
         <%= render @view_module, @view_template, assigns %>
       </main>
 
