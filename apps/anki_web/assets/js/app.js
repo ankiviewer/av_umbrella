@@ -1,3 +1,2 @@
 import './hamburger.js';
-
-console.log('hello rollup');
+import './sync.js';

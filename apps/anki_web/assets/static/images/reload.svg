@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="51px" viewBox="0 0 50 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="gerenic/reload" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, -1.000000)">
+        <g id="Group" fill="#757575">
+            <path d="M42,8.66954719 L42,16.4591537 C38.4715798,10.7806638 32.1773006,7 25,7 C13.954305,7 5,15.954305 5,27 C5,38.045695 13.954305,47 25,47 C36.045695,47 45,38.045695 45,27 C45,25.8060066 44.8953716,24.6364505 44.6947831,23.5 L49.7569373,23.5 C49.9171583,24.6436764 50,25.8121638 50,27 C50,40.8071187 38.8071187,52 25,52 C11.1928813,52 0,40.8071187 0,27 C0,13.1928813 11.1928813,2 25,2 C31.565128,2 37.5392045,4.53059226 42,8.66954719 Z" id="Combined-Shape"></path>
+            <polygon id="Triangle" transform="translate(43.806490, 12.560835) rotate(129.000000) translate(-43.806490, -12.560835) " points="45.1231612 6.4496978 55.0205637 18.6719721 32.5924173 16.5968941"></polygon>
+        </g>
+    </g>
+</svg>
