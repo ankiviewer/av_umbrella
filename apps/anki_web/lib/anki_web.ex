@@ -40,6 +40,7 @@ defmodule AnkiWeb do
       import AnkiWeb.Router.Helpers
       import AnkiWeb.ErrorHelpers
       import AnkiWeb.Gettext
+      import AnkiWeb.ComponentHelpers
       alias AnkiWeb.LayoutView
     end
   end

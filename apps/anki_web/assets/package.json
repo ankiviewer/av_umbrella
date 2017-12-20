@@ -8,7 +8,7 @@
     "build:elm": "elm-make elm/Main.elm --output ../priv/static/js/elm.js",
     "build:css": "sass css/main.scss:../priv/static/css/app.css",
     "build:static": "cp -R static/* ../priv/static",
-    "watch:js": "nodemon -w js -x 'npm run build:js'",
+    "watch:js": "rollup -f cjs js/app.js -o ../priv/static/js/app.js -m -w",
     "watch:elm": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
     "watch:css": "sass --watch css/main.scss:../priv/static/css/app.css",
     "test": "npm run test:nightwatch",

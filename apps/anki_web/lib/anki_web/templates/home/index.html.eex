@@ -4,3 +4,5 @@
 <button id="sync_button" class="dib pa2 bg-light-grey br3">
   <img src="<%= static_path(@conn, "/images/reload.svg") %>">
 </button>
+
+<%= component "spinner", class: "spinner dn" %>
