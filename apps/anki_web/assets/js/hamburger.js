@@ -8,7 +8,7 @@ hamburger.addEventListener('click', function () {
 });
 
 function resizeHamburger() {
-  document.querySelector('.mobile-navbar-menu').style.height = (window.innerHeight - document.querySelector('header.header').clientHeight) + 'px';
+  select('.mobile-navbar-menu').style.height = (window.innerHeight - select('header.header').clientHeight) + 'px';
 }
 
 window.addEventListener('load', resizeHamburger);
