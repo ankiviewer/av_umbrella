@@ -9,7 +9,7 @@ defmodule AnkiWeb.HomeController do
     naive = Collection |> Repo.one |> Map.fetch!(:updated_at)
 
     %{day: day, hour: hour, minute: minute, month: month, year: year} = naive
-    month = @months |> Enum.at(month) |> String.capitalize
+    month = @months |> Enum.at(month - 1) |> String.capitalize
     year = year - 2000
 
     updated_at = "#{day} #{month} #{year} at #{hour}:#{minute}"
