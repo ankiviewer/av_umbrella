@@ -10,7 +10,7 @@
     "build:static": "cp -R static/* ../priv/static",
     "watch:js": "rollup -f cjs js/app.js -o ../priv/static/js/app.js -m -w",
     "watch:elm": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
-    "watch:css": "sass --watch css/main.scss:../priv/static/css/app.css",
+    "watch:css": "mkdir -p ../priv/static/css && sass --watch css/main.scss:../priv/static/css/app.css",
     "test": "npm run test:nightwatch",
     "test:watch": "nodemon -x 'npm test'",
     "test:nightwatch": "rollup -f cjs test/e2e/desktop/navbar.js -o test/e2e/bundle/desktop/navbar.js && rollup -f cjs test/e2e/mobile/navbar.js -o test/e2e/bundle/mobile/navbar.js && nightwatch -e desktop,mobile",
