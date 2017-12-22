@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+for type <- ~w(collection notes) do
+  "/#{type}"
+  |> Anki.request!
+  |> Anki.update!(type)
+end
