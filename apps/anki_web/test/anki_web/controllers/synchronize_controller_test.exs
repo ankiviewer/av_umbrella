@@ -1,7 +1,7 @@
 defmodule AnkiWeb.SynchronizeControllerTest do
-  use AnkiWeb.ConnCase
+  use AnkiWeb.ConnCase, async: false
 
-  require Poison
+  # require Poison
 
   test "GET /synchronize", %{conn: conn} do
     actual = conn

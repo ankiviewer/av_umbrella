@@ -1,5 +1,5 @@
 defmodule AnkiWeb.PageControllerTest do
-  use AnkiWeb.ConnCase
+  use AnkiWeb.ConnCase, async: false
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
