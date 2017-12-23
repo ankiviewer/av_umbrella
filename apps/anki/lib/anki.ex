@@ -5,16 +5,31 @@ defmodule Anki do
   """
   require Poison
   require HTTPoison
-
-  alias Anki.{Collection, Note}
+  alias Porcelain.Process, as: Proc
+  alias HTTPoison.Response, as: Resp
 
   @root_url "http://localhost:5555"
   @home __DIR__ <> "/.."
 
   def json_model, do: @home <> "/node_app/test/models.json"
 
-  defp kill_node,
-    do: System.cmd "pkill", ["node"]
+  @doc"""
+  Kills node process started by Porcelain
+  """
+  def kill_node do
+    {ps, 0} = System.cmd "ps", ["-ef"]
+    node_proc_pid = ps
+    |> String.split("\n")
+    |> Enum.find(&(Regex.match? ~r/\d node \S*node_app\/src\/index\.js/, &1))
+    |> case do
+      nil -> nil
+      n_pid -> n_pid |> String.split |> Enum.at(1)
+    end
+
+    if node_proc_pid do
+      System.cmd "kill", ["-9", node_proc_pid]
+    end
+  end
 
   defp node_result(pid, endpoint) when is_binary endpoint do
     receive do
@@ -34,20 +49,18 @@ defmodule Anki do
   """
   def request!(endpoint) when endpoint in ~w(/collection /notes) do
     kill_node()
+
     System.put_env "NODE_ENV", "#{Mix.env}"
     cmd = "node #{@home}/node_app/src/index.js"
     opts = [out: {:send, self()}]
-    %Porcelain.Process{pid: pid} = Porcelain.spawn_shell cmd, opts
+    proc = %Proc{pid: pid} = Porcelain.spawn_shell cmd, opts
 
     result = node_result pid, endpoint
 
-    {"", 0} = kill_node()
+    Proc.stop proc
 
-    with %HTTPoison.Response{body: body} <- result, do: Poison.decode! body
+    kill_node()
+
+    with %Resp{body: body} <- result, do: Poison.decode! body
   end
-
-  def update!(attrs, "collection"),
-    do: attrs |> Collection.format |> Collection.update!
-  def update!(attrs, "notes"),
-    do: Note.update! attrs
 end
