@@ -6,55 +6,29 @@ defmodule Anki.NoteTest do
 
   require Poison
 
-  describe "Note.update!" do
-    test "without initial note data" do
-      notes = "#{__DIR__}/../../node_app/test/models.json"
-      |> File.read!
-      |> Poison.decode!
-      |> Map.fetch!("formattedNotes")
+  test "Updating Notes" do
+    Note.delete!
 
-      Note.update! notes
+    notes = "#{__DIR__}/../../node_app/test/models.json"
+    |> File.read!
+    |> Poison.decode!
+    |> Map.fetch!("formattedNotes")
 
-      actual = Note
-      |> Repo.all
-      |> TestHelpers.sanitize
-      |> Enum.map(&Map.drop &1, [:rules_status])
-
-      expected = notes
-      |> Note.format
-      |> TestHelpers.sanitize
-
-      assert actual == expected
+    for note <- notes do
+      note
+      |> Note.format!
+      |> Note.insert!
     end
 
-    test "with initial note data" do
-      notes = "#{__DIR__}/../../node_app/test/models.json"
-      |> File.read!
-      |> Poison.decode!
-      |> Map.fetch!("formattedNotes")
+    actual = Note
+    |> Repo.all
+    |> TestHelpers.sanitize
+    |> Enum.map(&Map.drop &1, [:rules_status])
 
-      Note.update! notes
+    expected = notes
+    |> Note.format!
+    |> TestHelpers.sanitize
 
-      new_notes = notes
-      |> Enum.map(fn %{"anki_note_id" => id} = note ->
-        case id do
-          2 -> Map.put(note, "tags", "sentence")
-          _ -> note
-        end
-      end)
-
-      Note.update! new_notes
-
-      actual = Note
-      |> Repo.all
-      |> TestHelpers.sanitize
-      |> Enum.map(&Map.drop &1, [:rules_status])
-
-      expected = new_notes
-      |> Note.format
-      |> TestHelpers.sanitize
-
-      assert actual == expected
-    end
+    assert actual == expected
   end
 end

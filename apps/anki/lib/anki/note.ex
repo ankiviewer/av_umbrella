@@ -27,12 +27,12 @@ defmodule Anki.Note do
   end
 
   @doc"""
-  iex>format(%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766})
+  iex>format!(%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766})
   %{one: "hello", tags: ["hello", "world"], mod: "1486035766"}
-  iex>format([%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766}])
+  iex>format!([%{"one" => "hello", "tags" => "hello world", "mod" => 1486035766}])
   [%{one: "hello", tags: ["hello", "world"], mod: "1486035766"}]
   """
-  def format(map) when is_map(map) do
+  def format!(map) when is_map(map) do
     map
     |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
     |> Map.new(
@@ -47,8 +47,8 @@ defmodule Anki.Note do
     )
   end
 
-  def format(list) when is_list(list),
-    do: Enum.map list, &format/1
+  def format!(list) when is_list(list),
+    do: Enum.map list, &format!/1
 
   @doc"""
   Takes a list of notes and updates the note table with this data
@@ -56,12 +56,17 @@ defmodule Anki.Note do
   """
   def update!(notes) when is_list(notes) do
     # TODO: check collection is also up to date and update this if not
+    delete!()
+
+    for note <- notes,
+      do: insert! note
+  end
+
+  def delete! do
     for old_note <- Repo.all(Note),
       do: Repo.delete! old_note
-
-    for note <- notes do
-      with note <- format(note),
-        do: %Note{} |> Note.changeset(note) |> Repo.insert!
-    end
   end
+
+  def insert!(note),
+    do: %Note{} |> Note.changeset(note) |> Repo.insert!
 end

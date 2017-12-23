@@ -7,10 +7,12 @@
     "build:js": "rollup -f cjs js/app.js -o ../priv/static/js/app.js -m",
     "build:elm": "elm-make elm/Main.elm --output ../priv/static/js/elm.js",
     "build:css": "sass css/main.scss:../priv/static/css/app.css",
-    "build:static": "cp -R static/* ../priv/static",
+    "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
+    "watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",
     "watch:js": "rollup -f cjs js/app.js -o ../priv/static/js/app.js -m -w",
     "watch:elm": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
     "watch:css": "mkdir -p ../priv/static/css && sass --watch css/main.scss:../priv/static/css/app.css",
+    "watch:static": "nodemon -e png,svg -x 'npm run build:static' -w static",
     "test": "npm run test:nightwatch",
     "test:watch": "nodemon -x 'npm test'",
     "test:nightwatch": "rollup -f cjs test/e2e/desktop/navbar.js -o test/e2e/bundle/desktop/navbar.js && rollup -f cjs test/e2e/mobile/navbar.js -o test/e2e/bundle/mobile/navbar.js && nightwatch -e desktop,mobile",
@@ -18,6 +20,7 @@
   },
   "dependencies": {
     "hamburgers": "^0.9.1",
+    "phoenix": "^1.3.0",
     "rollup": "^0.52.1",
     "tachyons-sass": "^4.8.1"
   },

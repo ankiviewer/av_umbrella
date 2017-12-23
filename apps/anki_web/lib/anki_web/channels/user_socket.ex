@@ -2,7 +2,7 @@ defmodule AnkiWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", AnkiWeb.RoomChannel
+  channel "sync:*", AnkiWeb.SyncChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

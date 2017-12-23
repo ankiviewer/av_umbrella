@@ -1,27 +1,26 @@
 import { select, request } from './utils.js'
 
-function sync(type, cb) {
-  select('.spinner').classList.remove('dn');  
+var socket = new Phoenix.Socket('/socket', {});
 
-  select('.spinner > .message').innerHTML = 'Syncing ' + type + '...';
+socket.connect();
 
-  const opts = {
-    'content-type': 'application/json;charset=UTF-8',
-    'x-csrf-token': csrfToken,
-    payload: {type}
-  };
+select('#sync_button').addEventListener('click', function(_e) {
+  var channel = socket.channel('sync:deck', {});
 
-  request.post('/api/synchronize', opts, function (err, res) {
-    select('.spinner').classList.add('dn');
+  select('.spinner').classList.remove('dn');
+  select('.spinner > .message').innerHTML = 'Starting Sync...';
 
-    cb(err, res);
+  channel.on('sync_msg', function (payload) {
+    select('.spinner > .message').innerHTML = payload.body;
+
+    if (payload.body === 'Synced!') {
+      setTimeout(function () {
+        select('.spinner').classList.add('dn');
+      }, 500);
+    }
   });
-}
 
-select('#sync_button').addEventListener('click', function(e) {
-  sync('collection', function (err, res) {
-    sync('notes', function (err, res) {
-      console.log('DONE!');
-    });
-  });
+  channel.join()
+    .receive('ok', function (resp) { console.log('ok: ', resp) } )
+    .receive('error', function (resp) { console.log('error: ', resp); } );
 });

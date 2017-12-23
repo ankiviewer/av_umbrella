@@ -8,7 +8,6 @@ defmodule AnkiWeb.SynchronizeController do
     
     "/#{type}"
     |> Anki.request!
-    |> Anki.update!(type)
 
     json conn, %{"message" => "success"}
   end
