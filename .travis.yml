@@ -1,0 +1,35 @@
+language: elixir
+elixir:
+  - 1.5
+node_js:
+  - 6.11
+go:
+  - 1.9
+rvm:
+  - 2.3
+addons:
+  postgresql: 9.4
+cache:
+  directories:
+    - _build
+    - deps
+    - apps/anki/node_app/node_modules
+    - apps/anki_web/assets/node_modules
+env:
+  - MIX_ENV=test
+git:
+  depth: 1
+before_install:
+  - git clone https://github.com/alco/goon.git
+  - cd goon
+  - go build
+  - export PATH=$PATH:"$(pwd)"/goon
+  - cd -
+install:
+  - npm install -g elm
+  - gem install sass
+  - cd apps/anki/node_app && npm install && cd -
+  - cd apps/anki_web/assets && npm install && npm run build && cd -
+  - mix do deps.get, ecto.create, ecto.migrate
+script:
+  - mix test

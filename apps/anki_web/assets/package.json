@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build:js && npm run build:elm && npm run build:css && npm run build:static",
     "build:js": "rollup -f cjs js/app.js -o ../priv/static/js/app.js -m",
-    "build:elm": "elm-make elm/Main.elm --output ../priv/static/js/elm.js",
+    "build:elm": "elm-make elm/Main.elm --output ../priv/static/js/elm.js --yes",
     "build:css": "sass css/main.scss:../priv/static/css/app.css",
     "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
     "watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",
