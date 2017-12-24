@@ -24,6 +24,7 @@ install:
   - cd apps/anki/node_app && npm install && cd -
   - mix do local.hex --force, local.rebar --force
   - mix do deps.get, ecto.create, ecto.migrate
+  - node -v
+  - goon -v
 script:
-  - mix test
-
+  - mix test --trace

@@ -1,8 +1,6 @@
 defmodule AnkiTest do
   use ExUnit.Case, async: false
 
-  @moduletag timeout: 600000
-
   require Poison
 
   test "/collection" do
