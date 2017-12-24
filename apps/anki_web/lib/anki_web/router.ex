@@ -26,6 +26,6 @@ defmodule AnkiWeb.Router do
   scope "/api", AnkiWeb do
     pipe_through :api
 
-    post "/synchronize", SynchronizeController, :create
+    get "/deck", DeckController, :index
   end
 end

@@ -10,7 +10,7 @@
     "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
     "watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",
     "watch:js": "rollup -c rollup.config.js -w",
-    "watch:elm": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
+    "watch:elm": "elm-live elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm --pushstate --output=../priv/static/js/elm.js",
     "watch:css": "mkdir -p ../priv/static/css && sass --watch css/main.scss:../priv/static/css/app.css",
     "watch:static": "nodemon -e png,svg -x 'npm run build:static' -w static",
     "test": "npm run test:nightwatch",

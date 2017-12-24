@@ -1,6 +1,5 @@
 module Settings exposing (..)
 
-
 import Html exposing (text)
 
 
