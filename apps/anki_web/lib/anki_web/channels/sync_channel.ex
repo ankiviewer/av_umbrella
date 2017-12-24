@@ -14,7 +14,7 @@ defmodule AnkiWeb.SyncChannel do
 
     "/collection"
     |> Anki.request!
-    |> Collection.format
+    |> Collection.format!
     |> Collection.update!
 
     push socket, "sync_msg", %{body: "Syncing Notes..."}
