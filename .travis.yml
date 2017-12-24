@@ -16,7 +16,7 @@ before_install:
   - git clone https://github.com/alco/goon.git
   - cd goon
   - go build
-  - export PATH=$PATH:"$(pwd)"/goon
+  - export PATH=$PATH:"$(pwd)"
   - cd -
 install:
   - nvm install stable
