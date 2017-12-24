@@ -13,8 +13,8 @@ cache:
 git:
   depth: 1
 before_install:
-  - git clone https://github.com/alco/goon.git
-  - cd goon
+  - git clone https://github.com/alco/goon.git $HOME/goon
+  - cd $HOME/goon
   - go build
   - export PATH=$PATH:"$(pwd)"
   - cd -
