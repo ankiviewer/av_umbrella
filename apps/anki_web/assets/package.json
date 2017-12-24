@@ -1,35 +1,18 @@
 {
-  "description": "front end for anki_viewer_umbrella",
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "build": "npm run build:js && npm run build:elm && npm run build:css && npm run build:static",
-    "build:js": "rollup -c rollup.config.js",
-    "build:elm": "elm-make elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm --output ../priv/static/js/elm.js --yes",
-    "build:css": "sass css/main.scss:../priv/static/css/app.css",
-    "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
-    "watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",
-    "watch:js": "rollup -c rollup.config.js -w",
-    "watch:elm": "elm-live elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm --pushstate --output=../priv/static/js/elm.js",
-    "watch:css": "mkdir -p ../priv/static/css && sass --watch css/main.scss:../priv/static/css/app.css",
-    "watch:static": "nodemon -e png,svg -x 'npm run build:static' -w static",
-    "test": "npm run test:nightwatch",
-    "test:watch": "nodemon -x 'npm test'",
-    "test:nightwatch": "rollup -c rollup.nightwatch.config.js && nightwatch -e desktop,mobile",
-    "test:nightwatch:watch": "nodemon -x 'npm run test:nightwatch' -i test/e2e/bundle"
+    "deploy": "brunch build --production",
+    "watch": "brunch watch --stdin"
   },
   "dependencies": {
-    "hamburgers": "^0.9.1",
-    "phoenix": "^1.3.0",
-    "rollup": "^0.52.1",
-    "tachyons-sass": "^4.8.1"
+    "phoenix": "file:../../../deps/phoenix",
+    "phoenix_html": "file:../../../deps/phoenix_html"
   },
   "devDependencies": {
-    "chromedriver": "^2.33.2",
-    "elm-live": "^2.7.5",
-    "nightwatch": "^0.9.19",
-    "nodemon": "^1.12.5",
-    "selenium-download": "^2.0.10",
-    "selenium-server": "^3.8.1"
+    "babel-brunch": "6.1.1",
+    "brunch": "2.10.9",
+    "clean-css-brunch": "2.10.0",
+    "uglify-js-brunch": "2.10.0"
   }
 }

@@ -9,21 +9,3 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
-
-alias Anki.{Collection, Note}
-
-"/collection"
-|> Anki.request!
-|> Collection.format!
-|> Collection.update!
-
-Note.delete!
-
-"/notes"
-|> Anki.request!
-
-for note <- Anki.request! "/notes" do
-  note
-  |> Note.format!
-  |> Note.insert!
-end

@@ -13,7 +13,7 @@ config :anki_web,
 # Configures the endpoint
 config :anki_web, AnkiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "+5i4qvNI+nBcZA9nwlYzg54qQl8pj0Cd9xepj8Gsu/aeoF9H/x3jh9qY6ygnVOPh",
+  secret_key_base: "+LHL2rQKTJoAtHul9+d+lmIpBl2Ck7S7/KdYb/IFoJv+BHQsE825ACv7kCqfKrNG",
   render_errors: [view: AnkiWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: AnkiWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]

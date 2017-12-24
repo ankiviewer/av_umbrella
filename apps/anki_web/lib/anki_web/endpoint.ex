@@ -36,7 +36,7 @@ defmodule AnkiWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_anki_web_key",
-    signing_salt: "4Wrrlvnb"
+    signing_salt: "RWgclugI"
 
   plug AnkiWeb.Router
 

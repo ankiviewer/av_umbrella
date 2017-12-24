@@ -3,5 +3,3 @@
 /deps
 erl_crash.dump
 *.ez
-.sass-cache
-elm-stuff

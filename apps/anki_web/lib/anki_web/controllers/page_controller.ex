@@ -1,10 +1,7 @@
 defmodule AnkiWeb.PageController do
   use AnkiWeb, :controller
 
-  alias AnkiWeb.LayoutView
-
-  def styleguide(conn, _params) do
-    render conn, "styleguide.html",
-      layout: {LayoutView, "plain.html"}
+  def index(conn, _params) do
+    render conn, "index.html"
   end
 end

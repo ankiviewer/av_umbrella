@@ -1,19 +1,8 @@
 defmodule AnkiWeb.PageControllerTest do
-  use AnkiWeb.ConnCase, async: false
-
-  alias Anki.Collection
-
-  setup do
-    "/collection"
-    |> Anki.request!
-    |> Collection.format!
-    |> Collection.update!
-
-    :ok
-  end
+  use AnkiWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
-    assert html_response(conn, 200)
+    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
   end
 end

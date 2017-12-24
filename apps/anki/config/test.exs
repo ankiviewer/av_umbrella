@@ -7,6 +7,4 @@ config :anki, Anki.Repo,
   password: "postgres",
   database: "anki_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox,
-  ownership_timeout: 10 * 60 * 1000
-
+  pool: Ecto.Adapters.SQL.Sandbox
