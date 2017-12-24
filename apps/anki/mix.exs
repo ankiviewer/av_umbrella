@@ -37,7 +37,11 @@ defmodule Anki.Mixfile do
   defp deps do
     [
       {:postgrex, ">= 0.0.0"},
-      {:ecto, "~> 2.1"}
+      {:ecto, "~> 2.1"},
+      {:porcelain, "~> 2.0"},
+      {:httpoison, "~> 0.13.0"},
+      {:poison, "~> 3.1"},
+      {:mix_test_watch, "~> 0.5.0", only: :dev, runtime: false}
     ]
   end
 
