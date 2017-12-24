@@ -1,4 +1,4 @@
-import { select, request } from './utils.js'
+import { select, request } from '../utils/index.js'
 
 var socket = new Phoenix.Socket('/socket', {});
 

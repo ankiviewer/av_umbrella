@@ -1,4 +1,4 @@
-import request from './utils/request.js';
+import request from './request.js';
 
 function select (el) {
   return document.querySelector(el);

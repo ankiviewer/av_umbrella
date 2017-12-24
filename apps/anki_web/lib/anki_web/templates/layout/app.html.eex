@@ -63,8 +63,9 @@
       var csrfToken = "<%= Phoenix.Controller.get_csrf_token() %>"
     </script>
 
-    <script src="<%= static_path(@conn, "/js/phoenix.js") %>"></script>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-    <script src="<%= static_path(@conn, "/js/elm.js") %>"></script>
+    <script src="<%= static_path @conn, "/js/app.js" %>"></script>
+    <script src="<%= static_path @conn, "/js/phoenix.js" %>"></script>
+    <script src="<%= static_path @conn, "/js/elm.js" %>"></script>
+    <script src="<%= static_path @conn, "/js/#{LayoutView.js_file @conn}" %>"></script>
   </body>
 </html>

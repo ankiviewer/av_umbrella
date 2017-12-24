@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "build": "npm run build:js && npm run build:elm && npm run build:css && npm run build:static",
-    "build:elm": "elm-make elm/Main.elm --output ../priv/static/js/elm.js --yes",
     "build:js": "rollup -c rollup.config.js",
+    "build:elm": "elm-make elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm --output ../priv/static/js/elm.js --yes",
     "build:css": "sass css/main.scss:../priv/static/css/app.css",
     "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
     "watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",

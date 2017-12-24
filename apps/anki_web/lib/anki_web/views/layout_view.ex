@@ -17,4 +17,8 @@ defmodule AnkiWeb.LayoutView do
   def view_name(%{request_path: request_path} = _conn),
     do: @views_map[request_path]
 
+  def js_file(%{request_path: "/"}),
+    do: "home.js"
+  def js_file(%{request_path: "/" <> file}),
+    do: file <> ".js"
 end

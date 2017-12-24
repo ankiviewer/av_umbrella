@@ -1,2 +1,1 @@
-import './hamburger.js';
-import './sync.js';
+import './app/hamburger.js';

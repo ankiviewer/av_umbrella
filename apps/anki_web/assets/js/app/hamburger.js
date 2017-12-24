@@ -1,4 +1,4 @@
-import { select } from './utils.js';
+import { select } from '../utils/index.js';
 
 var hamburger = select('.hamburger');
 
@@ -8,7 +8,8 @@ hamburger.addEventListener('click', function () {
 });
 
 function resizeHamburger() {
-  select('.mobile-navbar-menu').style.height = (window.innerHeight - select('header.header').clientHeight) + 'px';
+  var headerHeight = select('header.header').clientHeight;
+  select('.mobile-navbar-menu').style.height = (window.innerHeight - headerHeight) + 'px';
 }
 
 window.addEventListener('load', resizeHamburger);
