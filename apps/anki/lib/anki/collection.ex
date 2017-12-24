@@ -47,7 +47,7 @@ defmodule Anki.Collection do
   def format_tags(tags),
     do: Map.keys tags
 
-  def format(collection_request) do
+  def format!(collection_request) do
     collection_request
     |> Map.new(fn {k, v} -> {String.to_atom(k), v} end)
     |> Map.new(

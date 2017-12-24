@@ -72,7 +72,7 @@ defmodule Anki.CollectionTest do
           "verified-by-vanessa" => 0
         }
       }
-      actual = Collection.format(collection_request)
+      actual = Collection.format!(collection_request)
       expected = %{
         :decks => ["DE", "Thai"],
         :mod => "1507832160",
