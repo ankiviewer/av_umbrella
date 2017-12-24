@@ -1,6 +1,5 @@
 module Search exposing (..)
 
-
 import Html exposing (text)
 
 

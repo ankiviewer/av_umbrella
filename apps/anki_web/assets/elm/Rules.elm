@@ -1,6 +1,5 @@
 module Rules exposing (..)
 
-
 import Html exposing (text)
 
 
