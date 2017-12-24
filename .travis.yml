@@ -15,6 +15,7 @@ cache:
     - deps
     - apps/anki/node_app/node_modules
     - apps/anki_web/assets/node_modules
+    - apps/anki_web/assets/elm-stuff
 env:
   - MIX_ENV=test
 git:
