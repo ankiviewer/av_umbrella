@@ -3,8 +3,6 @@ elixir:
   - 1.5
 go:
   - 1.9
-rvm:
-  - 2.3
 addons:
   postgresql: 9.4
 cache:
@@ -12,15 +10,6 @@ cache:
     - _build
     - deps
     - apps/anki/node_app/node_modules
-    - apps/anki_web/assets/node_modules
-    - apps/anki_web/assets/elm-stuff/build-artifacts
-    - sysconfcpus
-os: 
-  - linux
-  - osx
-env:
-  - MIX_ENV=test
-  - ELM_VERSION=0.18.0 TARGET_NODE_VERSION=node
 git:
   depth: 1
 before_install:
@@ -29,32 +18,11 @@ before_install:
   - go build
   - export PATH=$PATH:"$(pwd)"/goon
   - cd -
-
-  # based on: https://github.com/rtfeldman/node-elm-compiler/blob/master/.travis.yml#L37-L39
-  - if [ ${TRAVIS_OS_NAME} == "osx" ];
-    then brew update; brew install nvm; mkdir ~/.nvm; export NVM_DIR=~/.nvm; source $(brew --prefix nvm)/nvm.sh;
-    fi
-  - | # epic build time improvement - see https://github.com/elm-lang/elm-compiler/issues/1473#issuecomment-245704142
-    if [ ! -d sysconfcpus/bin ];
-    then
-      git clone https://github.com/obmarg/libsysconfcpus.git;
-      cd libsysconfcpus;
-      ./configure --prefix=$TRAVIS_BUILD_DIR/sysconfcpus;
-      make && make install;
-      cd ..;
-    fi
 install:
-  - nvm install $TARGET_NODE_VERSION
-  - nvm use $TARGET_NODE_VERSION
-  - node --version
-  - npm --version
-  - npm install -g elm@$ELM_VERSION
-  - mv $(npm config get prefix)/bin/elm-make $(npm config get prefix)/bin/elm-make-old
-  - printf "#\041/bin/bash\n\necho \"Running elm-make with sysconfcpus -n 2\"\n\n$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 elm-make-old \"\$@\"" > $(npm config get prefix)/bin/elm-make
-  - chmod +x $(npm config get prefix)/bin/elm-make
-  - gem install sass
+  - nvm install stable
+  - nvm use stable
   - cd apps/anki/node_app && npm install && cd -
-  - cd apps/anki_web/assets && npm install && npm run build && cd -
+  - mix do local.hex --force, local.rebar --force
   - mix do deps.get, ecto.create, ecto.migrate
 script:
   - mix test
