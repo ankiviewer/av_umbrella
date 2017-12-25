@@ -13,6 +13,6 @@ git:
   depth: 1
 install:
   - mix do local.hex --force, local.rebar --force
-  - mix do deps.get, ecto.create, ecto.migrate
+  - mix do deps.get, compile, ecto.create, ecto.migrate
 script:
-  - mix test
+  - mix coveralls.travis --umbrella
