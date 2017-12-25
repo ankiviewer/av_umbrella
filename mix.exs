@@ -5,7 +5,11 @@ defmodule Anki.Umbrella.Mixfile do
     [
       apps_path: "apps",
       start_permanent: Mix.env == :prod,
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: ["coveralls": :test,
+                          "coveralls.html": :test,
+                          "coveralls.travis": :test]
     ]
   end
 
@@ -22,6 +26,6 @@ defmodule Anki.Umbrella.Mixfile do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps folder
   defp deps do
-    [{:credo, "~> 0.8.10"}]
+    [{:credo, "~> 0.8.10"}, {:excoveralls, "~> 0.8.0", only: :test}]
   end
 end
