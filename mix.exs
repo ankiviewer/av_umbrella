@@ -9,7 +9,7 @@ defmodule Anki.Umbrella.Mixfile do
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: ["coveralls": :test,
                           "coveralls.html": :test,
-                          "coveralls.travis": :test]
+                          "coveralls.json": :test]
     ]
   end
 

@@ -11,8 +11,12 @@ cache:
     - deps
 git:
   depth: 1
+env:
+  - MIX_ENV=test
 install:
   - mix do local.hex --force, local.rebar --force
   - mix do deps.get, compile, ecto.create, ecto.migrate
 script:
-  - mix coveralls.travis --umbrella
+  - mix coveralls.json --umbrella
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
