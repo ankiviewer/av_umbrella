@@ -1,0 +1,14 @@
+.mobile-navbar-menu {
+  transition: all .5s;
+  right: 0;
+}
+
+.right-100 {
+  right: 100%;
+}
+
+.hamburger-inner {
+  background-color: $dark-grey;
+  &:before { background-color: $dark-grey; }
+  &:after { background-color: $dark-grey; }
+}
