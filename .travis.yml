@@ -16,7 +16,15 @@ env:
 install:
   - mix do local.hex --force, local.rebar --force
   - mix do deps.get, compile, ecto.create, ecto.migrate
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - cd apps/anki_web/assets && npm install && npm run build && cd -
 script:
   - mix coveralls.json --umbrella
+  - elixir --detached -e "File.write! 'pid', :os.getpid" -S mix phoenix.server
+  - ./wait_script.sh
+  - cd apps/anki_web/assets && npm run test:nightwatch && cd -
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - kill -9 "$(cat pid)"

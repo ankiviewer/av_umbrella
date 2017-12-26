@@ -1,6 +1,6 @@
 const desktop = (browser) => {
   browser
-    .url('http://localhost:4000')
+    .url('http://localhost:4001')
     .waitForElementVisible('body');
 }
 
