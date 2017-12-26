@@ -10,23 +10,20 @@
     "build:js": "rollup -c rollup.config.js",
     "build:elm": "elm-make elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm --output ../priv/static/js/elm.js --yes",
     "build:css": "sass css/main.scss:../priv/static/css/app.css",
-    "build:static": "cp -R static/* ../priv/static",
+    "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
     "build:nightwatch": "rollup -c rollup.nightwatch.config.js",
-
     "build:watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",
     "build:js:watch": "rollup -c rollup.config.js -w",
     "build:elm:watch": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
     "build:css:watch": "mkdir -p ../priv/static/css && sass --watch css/main.scss:../priv/static/css/app.css",
     "build:static:watch": "nodemon -e png,svg -x 'npm run build:static' -w static",
-
     "test": "npm run test:nightwatch",
     "test:nightwatch": "nightwatch -e desktop,mobile # check build has happened",
     "test:nightwatch:watch": "nodemon -x 'npm run test:nightwatch' -i test/e2e/bundle"
   },
   "dependencies": {
     "hamburgers": "^0.9.1",
-    "phoenix": "file:../../../deps/phoenix",
-    "phoenix_html": "file:../../../deps/phoenix_html",
+    "phoenix": "^1.3.0",
     "rollup": "^0.53.0",
     "tachyons-sass": "^4.9.0"
   },
