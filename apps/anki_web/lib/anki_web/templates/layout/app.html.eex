@@ -15,15 +15,43 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
+          <div class="bb bw2 b--dark-grey bg-light-grey">
+
+            <div class="dn-ns">
+              <div class="hamburger hamburger--spring">
+                <span class="hamburger-box">
+                  <span class="hamburger-inner"></span>
+                </span>
+              </div>
+              <h1 class="fr w-50 ma0 pa2 dark-grey">
+                <%= view_name @conn %>
+              </h1>
+            </div>
+
+            <div class="dn flex-ns justify-center pa1">
+              <%= for {link, text, current} <- views @conn do %>
+                <div class="f4 flex items-center justify-around">
+                  <%= link text, to: link, class: "link black pa3 b " <> if current, do: "underline", else: "" %>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
         </nav>
-        <span class="logo"></span>
       </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <div class="mobile-navbar-menu vh-100 bg-light-grey absolute right-100 w-100 dn-ns">
+        <div class="h-50">
+          <%= for {link, text, _current} <- views @conn do %>
+            <div class="h-20 pa3 pl4 f4">
+              <%= link text, to: link, class: "link black pa3 b" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <p class="alert alert-info" role="alert"><%= get_flash @conn, :info %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash @conn, :error %></p>
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
