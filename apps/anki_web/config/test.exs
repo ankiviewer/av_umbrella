@@ -4,4 +4,4 @@ use Mix.Config
 # you can enable the server option below.
 config :anki_web, AnkiWeb.Endpoint,
   http: [port: 4001],
-  server: false
+  server: true

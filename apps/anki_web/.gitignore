@@ -16,7 +16,13 @@ npm-debug.log
 # Since we are building assets from assets/,
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
-/priv/static/
+/priv/static/*
+!/priv/static/css
+!/priv/static/js
+/priv/static/css/*
+/priv/static/js/*
+!/priv/static/css/.keep
+!/priv/static/js/.keep
 
 # Files matching config/*.secret.exs pattern contain sensitive
 # data and you should not commit them into version control.
@@ -25,3 +31,10 @@ npm-debug.log
 # secrets files as long as you replace their contents by environment
 # variables.
 /config/*.secret.exs
+
+/assets/selenium-debug.log
+/assets/tests_output
+/assets/test/e2e/bundle/**/*.js
+
+/assets/.sass-cache/
+/assets/elm-stuff/
