@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run build:js && npm run build:elm && npm run build:css && npm run build:static",
     "build:js": "rollup -c rollup.config.js",
-    "build:elm": "elm-make elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm --output ../priv/static/js/elm.js --yes",
+    "build:elm": "ELM_FILES=\"elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm\" ELM_COMMAND=\"elm-make $ELM_FILES --output ../priv/static/js/elm.js --yes\";if [[ $TRAVIS = true ]];then\nbash -c \"$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 $ELM_COMMAND\"\nelse\nbash -c \"$ELM_COMMAND\"\nfi",
     "build:css": "sass css/main.scss:../priv/static/css/app.css",
     "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
     "build:nightwatch": "rollup -c rollup.nightwatch.config.js",
