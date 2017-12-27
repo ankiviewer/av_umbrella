@@ -48,7 +48,7 @@ install:
 script:
   - mix coveralls.json --umbrella
   - elixir --detached -e "File.write! 'pid', :os.getpid" -S mix phoenix.server
-  - ./wait_script.sh
+  - apps/anki_web/assets/wait_script.sh
   - cd apps/anki_web/assets && npm run build:nightwatch && npm run test:nightwatch && cd -
 after_success:
   - bash <(curl -s https://codecov.io/bash)
