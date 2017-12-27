@@ -1,3 +1,6 @@
+sudo: false
+
+dist: trusty
 language: elixir
 elixir:
   - 1.5
@@ -5,18 +8,57 @@ go:
   - 1.9
 addons:
   postgresql: 9.4 # TODO: try to upgrade this
+  chrome: stable
+  apt:
+    packages:
+      - oracle-java8-set-default
 cache:
   directories:
     - _build
     - deps
+    - apps/anki_web/assets/node_modules
+    - apps/anki_web/assets/elm-stuff/build-artifacts
+    - apps/anki_web/assets/elm-stuff/packages
+    - sysconfcpus
 git:
   depth: 1
 env:
-  - MIX_ENV=test
+  - MIX_ENV=test ELM_VERSION=0.18.0
+before_install:
+  - google-chome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 install:
+  - gem install sass
   - mix do local.hex --force, local.rebar --force
   - mix do deps.get, compile, ecto.create, ecto.migrate
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm --version
+  - node --version
+  # Taken from: https://github.com/rtfeldman/node-test-runner#travis-ci
+  - npm install -g elm@$ELM_VERSION elm-test
+  - git clone https://github.com/NoRedInk/elm-ops-tooling apps/anki_web/assets/elm-ops-tooling
+  - cd apps/anki_web/assets && elm-ops-tooling/with_retry.rb elm package install --yes && cd -
+  - |
+    if [ ! -d sysconfcpus/bin ];
+    then
+      git clone https://github.com/obmarg/libsysconfcpus.git;
+      cd libsysconfcpus;
+      ./configure --prefix=$TRAVIS_BUILD_DIR/sysconfcpus;
+      make && make install;
+      cd ..;
+    fi
+  - cd apps/anki_web/assets && npm install && npm run build && cd -
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 script:
   - mix coveralls.json --umbrella
+  - elixir --detached -e "File.write! 'pid', :os.getpid" -S mix phoenix.server
+  - apps/anki_web/assets/wait_script.sh
+  - cd apps/anki_web/assets && npm run build:nightwatch && npm run test:nightwatch && cd -
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - kill -9 "$(cat pid)"

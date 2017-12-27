@@ -1,4 +1,4 @@
-defmodule AnkiWeb.PageController do
+defmodule AnkiWeb.SearchController do
   use AnkiWeb, :controller
 
   def index(conn, _params) do

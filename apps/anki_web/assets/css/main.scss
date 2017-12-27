@@ -1,0 +1,10 @@
+@import "../node_modules/tachyons-sass/tachyons";
+@import "../node_modules/hamburgers/_sass/hamburgers/hamburgers";
+@import "colors";
+@import "mobile_navbar";
+@import "styleguide";
+@import "spinner";
+  
+* {
+  font-family:  'Arvo', Sans-Serif;
+}
