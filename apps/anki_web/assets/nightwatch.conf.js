@@ -25,7 +25,7 @@ const config = {
       selenium_host: 'localhost',
       silent: true,
       globals: {
-        waitForConditionTimeout: 10000
+        waitForConditionTimeout: 20000
       }
     },
 
