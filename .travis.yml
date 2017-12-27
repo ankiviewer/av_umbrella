@@ -7,6 +7,9 @@ go:
   - 1.9
 addons:
   postgresql: 9.4 # TODO: try to upgrade this
+  apt:
+    packages:
+      - oracle-java8-set-default
 cache:
   directories:
     - _build
@@ -49,6 +52,7 @@ script:
   - mix coveralls.json --umbrella
   - elixir --detached -e "File.write! 'pid', :os.getpid" -S mix phoenix.server
   - apps/anki_web/assets/wait_script.sh
+  - which java
   - cd apps/anki_web/assets && npm run build:nightwatch && npm run test:nightwatch && cd -
 after_success:
   - bash <(curl -s https://codecov.io/bash)
