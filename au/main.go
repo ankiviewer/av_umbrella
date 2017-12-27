@@ -5,12 +5,13 @@ import (
     "flag"
     "path/filepath"
     "strings"
+    "os"
     "os/exec"
     "log"
     "regexp"
 )
 
-var usage = `
+var usageMessage = `
        __ _ _   _ 
       / _  | | | |
      | (_| | |_| |
@@ -20,6 +21,14 @@ var usage = `
 au shortcuts for the anki_viewer_umbrella project
 
 Usage:
+  au root                       cd into umbrella project root
+  au ..                         same as: au root
+  au web                        cd into project web directory
+  au assets                     cd into project assets directory
+  au anki                       cd into anki directory
+  au .                          same as: au anki
+  au nodeapp                    cd into anki/node_app directory
+
   au install                    runs the necessary installations
 
   au build                      builds files
@@ -59,10 +68,22 @@ Examples:
 
 var argsErrorMessage = `Incorrect args, see usage by typing: au help`
 
-func correctFilePath() bool {
+func inAnkiRoot() bool {
     fp, _ := filepath.Abs("./")
 
     return strings.HasSuffix(fp, "anki_viewer_umbrella")
+}
+
+func inAnkiApp() bool {
+    fp, _ := filepath.Abs("./")
+
+    return strings.Contains(fp, "anki_viewer_umbrella")
+}
+
+func getAnkiRoot() string {
+    fp, _ := filepath.Abs("./")
+
+    return regexp.MustCompile(`.*anki_viewer_umbrella`).FindString(fp)
 }
 
 func stringInSlice(a string, list []string) bool {
@@ -74,31 +95,59 @@ func stringInSlice(a string, list []string) bool {
     return false
 }
 
-func main() {
-    // if !correctFilePath() {
-    //     fmt.Println("Run au commands from the root of the umbrella project")
-    //     return;
-    // }
+func cd(dir string) {
+    switch dir {
+    case "root":
+        os.Chdir(getAnkiRoot())
+    case "..":
+        os.Chdir(getAnkiRoot())
+    case "web":
+        os.Chdir(getAnkiRoot() + "/apps/anki_web")
+    case "assets":
+        os.Chdir(getAnkiRoot() + "/apps/anki_web/assets")
+    case "anki":
+        os.Chdir(getAnkiRoot() + "/apps/anki")
+    case ".":
+        os.Chdir(getAnkiRoot() + "/apps/anki")
+    case "nodeapp":
+        os.Chdir(getAnkiRoot() + "/apps/anki/nodeapp")
+    default:
+        panic("Shouldn't reach here, arg used: " + dir)
+    }
+}
 
-    args := make(map[string][]string)
-    args["install"] = args["install"]
-    args["build"] = append(args["build"], "-js", "-css", "-elm", "-static", "-w")
-    args["test"] = append(args["test"], "-w", "-node", "-js", "-elm", "-nw")
-    args["cover"] = append(args["cover"], "-html", "-open")
-    args["start"] = append(args["start"], "-prod")
-    args["versions"] = args["versions"]
-    args["deploy"] = args["deploy"]
+func main() {
+    cdArgs := []string{"root", "..", "web", "assets", "anki", ".", "nodeapp"}
+    firstArgs := []string{"install", "build", "test", "cover", "start", "versions", "deploy"}
+    secondArgs := make(map[string][]string)
+
+    secondArgs["build"] = append(secondArgs["build"], "-js", "-css", "-elm", "-static", "-w")
+    secondArgs["test"] = append(secondArgs["test"], "-w", "-node", "-js", "-elm", "-nw")
+    secondArgs["cover"] = append(secondArgs["cover"], "-html", "-open")
+    secondArgs["start"] = append(secondArgs["start"], "-prod")
 
     flag.Parse()
 
     a := flag.Args()
 
     if len(a) == 0 || a[0] == "-h" || a[0] == "--help" || a[0] == "help" {
-        fmt.Println(usage)
-        return
+          fmt.Println(usageMessage)
+          return
     }
 
-    if flags, exists := args[a[0]]; exists {
+    if !stringInSlice(a[0], append(cdArgs, firstArgs...)) {
+        panic("Unknown command: " + a[0])
+    }
+
+    if stringInSlice(a[0], firstArgs) && !inAnkiRoot() {
+        panic("Run the " + a[0] + " au command from the root of the umbrella project")
+    }
+
+    if stringInSlice(a[0], cdArgs) {
+      cd(a[0])
+    }
+
+    if flags, exists := firstArgs[a[0]]; exists {
         if (len(a) == 1) {
             execute(a)
         } else {
