@@ -1,0 +1,14 @@
+{
+  "skip_files": [
+    "lib/av_web.ex",
+    "lib/av_web/application.ex",
+    "lib/av_web/channels/user_socket.ex",
+    "lib/av_web/endpoint.ex",
+    "lib/av_web/gettext.ex",
+    "lib/av_web/router.ex",
+    "lib/av_web/views/error_helpers.ex",
+    "lib/av_web/views/error_view.ex",
+    "test/support/channel_case.ex",
+    "test/support/conn_case.ex"
+  ]
+}

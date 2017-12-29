@@ -1,3 +1,0 @@
-# Anki
-
-**TODO: Add description**

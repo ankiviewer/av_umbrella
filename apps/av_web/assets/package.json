@@ -1,0 +1,38 @@
+{
+  "description": "static assets for av_viewer_umbrella",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shouston3/av_viewer_umbrella.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run build:js && npm run build:elm && npm run build:css && npm run build:static",
+    "build:js": "rollup -c rollup.config.js",
+    "build:elm": "ELM_FILES=\"elm/Home.elm elm/Rules.elm elm/Search.elm elm/Settings.elm\" ELM_COMMAND=\"elm-make $ELM_FILES --output ../priv/static/js/elm.js --yes\";if [[ $TRAVIS = true ]];then\nbash -c \"$TRAVIS_BUILD_DIR/sysconfcpus/bin/sysconfcpus -n 2 $ELM_COMMAND\"\nelse\nbash -c \"$ELM_COMMAND\"\nfi",
+    "build:css": "sass css/main.scss:../priv/static/css/app.css",
+    "build:static": "cp -R static/* ../priv/static && cp node_modules/phoenix/priv/static/phoenix.js ../priv/static/js",
+    "build:nightwatch": "rollup -c rollup.nightwatch.config.js",
+    "build:watch": "nodemon -x 'npm run build' -e js,elm,css,png,svg",
+    "build:js:watch": "rollup -c rollup.config.js -w",
+    "build:elm:watch": "elm-live elm/Main.elm --pushstate --output=../priv/static/js/elm.js",
+    "build:css:watch": "mkdir -p ../priv/static/css && sass --watch css/main.scss:../priv/static/css/app.css",
+    "build:static:watch": "nodemon -e png,svg -x 'npm run build:static' -w static",
+    "test": "npm run test:nightwatch",
+    "test:nightwatch": "nightwatch -e desktop,mobile # check build has happened",
+    "test:nightwatch:watch": "nodemon -x 'npm run test:nightwatch' -i test/e2e/bundle"
+  },
+  "dependencies": {
+    "hamburgers": "^0.9.1",
+    "phoenix": "^1.3.0",
+    "rollup": "^0.53.0",
+    "tachyons-sass": "^4.9.0"
+  },
+  "devDependencies": {
+    "chromedriver": "^2.34.0",
+    "elm-live": "^2.7.5",
+    "nightwatch": "^0.9.19",
+    "nodemon": "^1.14.3",
+    "selenium-download": "^2.0.10",
+    "selenium-server": "^3.8.1"
+  }
+}
