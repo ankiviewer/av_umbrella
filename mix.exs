@@ -1,4 +1,4 @@
-defmodule Anki.Umbrella.Mixfile do
+defmodule Av.Umbrella.Mixfile do
   use Mix.Project
 
   def project do
