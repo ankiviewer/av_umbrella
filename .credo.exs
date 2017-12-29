@@ -25,14 +25,14 @@
         excluded: [
           ~r"/_build/",
           ~r"/deps/",
-          ~r"/apps/anki_web/assets/",
-          ~r"/apps/anki_web/lib/anki_web/application.ex",
-          ~r"/apps/anki/test/support/data_case.ex",
-          ~r"apps/anki_web/test/support/conn_case.ex",
-          ~r"apps/anki_web/test/support/channel_case.ex",
-          ~r"apps/anki/test/support/data_case.ex",
-          ~r"apps/anki_web/lib/anki_web/channels/user_socket.ex",
-          ~r"apps/anki_web/config/dev.exs"
+          ~r"/apps/av_web/assets/",
+          ~r"/apps/av_web/lib/av_web/application.ex",
+          ~r"/apps/av/test/support/data_case.ex",
+          ~r"apps/av_web/test/support/conn_case.ex",
+          ~r"apps/av_web/test/support/channel_case.ex",
+          ~r"apps/av/test/support/data_case.ex",
+          ~r"apps/av_web/lib/av_web/channels/user_socket.ex",
+          ~r"apps/av_web/config/dev.exs"
         ]
       },
       #
