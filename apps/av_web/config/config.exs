@@ -18,6 +18,10 @@ config :av_web, AvWeb.Endpoint,
   pubsub: [name: AvWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :av_web, AvWeb.Auth.Guardian,
+  issuer: "av_web",
+  secret_key: "KsEJIbKew7LFsdpeoHdbir0D+k2ISJ5XNBpNjUasIv2ywvhWNsdeZqjLiyRlYaU5"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

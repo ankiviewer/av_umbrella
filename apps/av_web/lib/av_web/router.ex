@@ -13,17 +13,27 @@ defmodule AvWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", AvWeb do
-    pipe_through :browser # Use the default browser stack
-
-    get "/", HomeController, :index
-    get "/rules", RulesController, :index
-    get "/search", SearchController, :index
-    get "/settings", SettingsController, :index
+  pipeline :with_session do
+    plug AvWeb.Auth.Pipeline
+    plug AvWeb.Auth.CurrentUser
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AvWeb do
-  #   pipe_through :api
-  # end
+  pipeline :login_required do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
+  scope "/", AvWeb do
+    pipe_through [:browser, :with_session]
+
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
+
+    scope "/" do
+      pipe_through :login_required
+
+      get "/", HomeController, :index
+      get "/rules", RulesController, :index
+      get "/search", SearchController, :index
+      get "/settings", SettingsController, :index
+    end
+  end
 end

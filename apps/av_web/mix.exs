@@ -46,7 +46,10 @@ defmodule AvWeb.Mixfile do
       {:gettext, "~> 0.11"},
       {:av, in_umbrella: true},
       {:cowboy, "~> 1.0"},
-      {:mix_test_watch, "~> 0.5.0", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 0.5.0", only: :dev, runtime: false},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 0.12"},
+      {:guardian, "~> 1.0"}
     ]
   end
 

@@ -34,6 +34,9 @@
                   <%= link text, to: link, class: "link black pa3 b " <> if current, do: "underline", else: "" %>
                 </div>
               <% end %>
+              <div class="f4 fr pa3 b">
+                  <%= link "Sign out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "link black pa3 b" %>
+              </div>
             </div>
 
           </div>
@@ -47,6 +50,9 @@
               <%= link text, to: link, class: "link black pa3 b" %>
             </div>
           <% end %>
+          <div class="h-20 pa3 pl4 f4">
+              <%= link "Sign out", to: session_path(@conn, :delete, @current_user), method: "delete", class: "link black pa3 b" %>
+          </div>
         </div>
       </div>
 
@@ -62,6 +68,8 @@
     <script>
       var csrfToken = "<%= Phoenix.Controller.get_csrf_token() %>"
     </script>
+
+    <script src="<%= static_path @conn, "/js/phoenix_html.js" %>"></script>
     <script src="<%= static_path @conn, "/js/app.js" %>"></script>
     <script src="<%= static_path @conn, "/js/phoenix.js" %>"></script>
     <script src="<%= static_path @conn, "/js/elm.js" %>"></script>
