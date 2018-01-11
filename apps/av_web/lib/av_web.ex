@@ -23,6 +23,7 @@ defmodule AvWeb do
       import Plug.Conn
       import AvWeb.Router.Helpers
       import AvWeb.Gettext
+      alias Av.Repo
     end
   end
 

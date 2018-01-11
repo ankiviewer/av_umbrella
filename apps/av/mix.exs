@@ -42,7 +42,9 @@ defmodule Av.Mixfile do
       {:porcelain, "~> 2.0"},
       {:httpoison, "~> 0.13.0"},
       {:poison, "~> 3.1"},
-      {:mix_test_watch, "~> 0.5.0", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 0.5.0", only: :dev, runtime: false},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 0.12"}
     ]
   end
 

@@ -2,7 +2,7 @@ defmodule AvWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", AvWeb.RoomChannel
+  channel "sync:*", AvWeb.SyncChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

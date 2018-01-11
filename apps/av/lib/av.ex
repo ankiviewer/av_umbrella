@@ -38,6 +38,8 @@ defmodule Av do
         if log =~ "running",
           do: HTTPoison.get!(@root_url <> endpoint),
           else: node_result pid, endpoint
+    after
+      5_000 -> "nothing running, check the node app"
     end
   end
 

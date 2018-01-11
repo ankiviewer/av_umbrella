@@ -16,12 +16,13 @@ defmodule Av.DataCase do
 
   using do
     quote do
-      alias Av.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import Av.DataCase
+
+      import Av.TestHelpers
+      alias Av.Repo
     end
   end
 
