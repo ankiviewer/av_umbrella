@@ -3,7 +3,6 @@ defmodule AvWeb.Auth.ErrorHandler do
   import AvWeb.Router.Helpers
 
   def auth_error(conn, {type, _reason}, _opts) do
-    IO.inspect type
     if type == :unauthenticated do
       conn
       |> Phoenix.Controller.put_flash(:error, "You must be signed in to access that page")
