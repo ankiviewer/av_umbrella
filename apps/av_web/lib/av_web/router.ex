@@ -36,4 +36,10 @@ defmodule AvWeb.Router do
       get "/settings", SettingsController, :index
     end
   end
+
+  scope "/api", AvWeb do
+    pipe_through :api
+
+    get "/deck", DeckController, :index
+  end
 end

@@ -24,6 +24,7 @@ defmodule AvWeb do
       import AvWeb.Router.Helpers
       import AvWeb.Gettext
       alias Av.Repo
+      alias Av.Anki.{Collection, Note, Model, Deck}
     end
   end
 
