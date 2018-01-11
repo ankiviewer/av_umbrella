@@ -1,9 +1,15 @@
 defmodule Av.Anki do
   @moduledoc false
 
-  defmodule Av.Anki.Helpers do
+  defmodule Helpers do
     def size_integer(map) when is_map(map),
       do: Map.new map, fn {k, v} -> {k, size_integer(v)} end
+    def size_integer(string) when is_binary(string) do
+      case Integer.parse(string) do
+        {int, ""} -> size_integer int
+        _ -> string
+      end
+    end
     def size_integer(int) when not is_integer(int),
       do: int
     def size_integer(int) when int < 10_000_000_000,
@@ -15,7 +21,7 @@ defmodule Av.Anki do
   defmodule Collection do
     use Ecto.Schema
     import Ecto.Changeset
-    import Av.Anki.Helpers
+    import Helpers
 
     schema "collection" do
       field :crt, :integer # created at
@@ -41,7 +47,7 @@ defmodule Av.Anki do
   defmodule Model do
     use Ecto.Schema
     import Ecto.Changeset
-    import Av.Anki.Helpers
+    import Helpers
 
     schema "models" do
       field :mid, :integer # model id
@@ -70,7 +76,7 @@ defmodule Av.Anki do
   defmodule Deck do
     use Ecto.Schema
     import Ecto.Changeset
-    import Av.Anki.Helpers
+    import Helpers
 
     schema "decks" do
       field :did, :integer # deck id
@@ -92,7 +98,7 @@ defmodule Av.Anki do
   defmodule Note do
     use Ecto.Schema
     import Ecto.Changeset
-    import Av.Anki.Helpers
+    import Helpers
 
     schema "notes" do
       field :cid, :integer # card id

@@ -2,7 +2,7 @@ defmodule Av.AnkiTest do
   use Av.DataCase, async: false
 
   require Poison
-  alias Av.Anki.{Collection, Model, Deck, Note}
+  alias Av.Anki.{Collection, Model, Deck, Note, Helpers}
 
   @nodeapp __DIR__ <> "/../../../../nodeapp"
   @models @nodeapp <> "/test/models.json"
@@ -10,6 +10,20 @@ defmodule Av.AnkiTest do
           |> Poison.decode!
   @collection @models |> Map.get("collection")
   @notes @models |> Map.get("notes")
+
+  test "helpers" do
+    [
+      {%{h: "hello", e: "ello", l: "llo"},
+        %{h: "hello", e: "ello", l: "llo"}},
+      {"hello", "hello"},
+      {1482060876072, 1482060876},
+      {1482060876, 1482060876},
+      {"1482060876072", 1482060876},
+      {"1482060876", 1482060876},
+    ] |> Enum.each(fn {input, expected} ->
+      assert Helpers.size_integer(input) == expected
+    end)
+  end
 
   describe "collection" do
     test "changeset" do
