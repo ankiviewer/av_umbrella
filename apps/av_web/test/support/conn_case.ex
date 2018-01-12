@@ -20,6 +20,7 @@ defmodule AvWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import AvWeb.Router.Helpers
+      import Av.TestHelpers
 
       # The default endpoint for testing
       @endpoint AvWeb.Endpoint

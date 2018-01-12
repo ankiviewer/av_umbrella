@@ -40,6 +40,8 @@ defmodule AvWeb.Router do
   scope "/api", AvWeb do
     pipe_through :api
 
-    get "/deck", DeckController, :index
+    get "/deck", HomeController, :updated_at
+    get "/collection", SearchController, :collection
+    get "/notes", SearchController, :notes
   end
 end
