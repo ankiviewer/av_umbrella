@@ -5,8 +5,15 @@ defmodule AvWeb.SearchController do
     render conn, "index.html"
   end
 
-  def sanitize_struct(struct) when is_map(struct),
-    do: Map.drop struct, [:__struct__, :__meta__, :id]
+  def sanitize_struct(struct) when is_map(struct) do
+    struct = Map.drop struct, [:__struct__, :__meta__, :id]
+    # elm can't handle json key of :type
+    if Map.has_key? struct, :type do
+      Map.merge struct, %{ttype: struct.type}
+    else
+       struct
+    end
+  end
   def sanitize_struct(struct) when is_nil(struct),
     do: nil
   def sanitize_struct(struct) when is_list(struct),
@@ -27,7 +34,7 @@ defmodule AvWeb.SearchController do
         json conn, %{payload: nil, error: "Decks not loaded"}
       true ->
         payload = %{collection: collection, models: models, decks: decks}
-        json conn, %{payload: payload, error: false}
+        json conn, %{payload: payload, error: ""}
     end
   end
 
@@ -36,7 +43,7 @@ defmodule AvWeb.SearchController do
       [] ->
         json conn, %{payload: nil, error: "Notes not loaded"}
       _ ->
-        json conn, %{payload: notes, error: false}
+        json conn, %{payload: notes, error: ""}
     end
   end
 end

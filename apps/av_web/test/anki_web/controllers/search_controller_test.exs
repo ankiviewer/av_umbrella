@@ -79,7 +79,8 @@ defmodule AvWeb.SearchControllerTest do
           }
         ]
       }
-      expected = %{"error" => false, "payload" => payload}
+      # TODO: allow error to take different types
+      expected = %{"error" => "", "payload" => payload}
 
       assert actual == expected
     end
@@ -168,7 +169,7 @@ defmodule AvWeb.SearchControllerTest do
           "type" => 2
         }
       ]
-      expected = %{"error" => false, "payload" => payload}
+      expected = %{"error" => "", "payload" => payload}
 
       assert actual == expected
     end
