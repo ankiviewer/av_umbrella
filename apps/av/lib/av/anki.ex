@@ -1,6 +1,4 @@
 defmodule Av.Anki do
-  @moduledoc false
-
   defmodule Helpers do
     def size_integer(map) when is_map(map),
       do: Map.new map, fn {k, v} -> {k, size_integer(v)} end
@@ -124,8 +122,51 @@ defmodule Av.Anki do
       |> cast(format(attrs), @attrs)
       |> validate_required(@attrs |> List.delete(:tags))
     end
-    defp format(note) do
+    defp format(%{"flds" => flds, "sfld" => sfld} = note) do
+      note = %{ note | "flds" => handle_unwanted_chars(flds) , "sfld" => handle_unwanted_chars(sfld)}
       size_integer note
+    end
+    def sanitize(notes) do
+      for note <- notes do
+        note
+        |> Map.merge(%{ttype: note.type}) # elm can't handle json key of :type
+        |> extra_fields
+      end
+    end
+    def extra_fields(%{flds: flds, sfld: sfld} = note) do
+      if String.ends_with? flds, sfld do
+        with one <- String.trim_trailing(flds, sfld),
+             two <- sfld,
+        do: Map.merge note, %{one: one, two: two}
+      else
+        if String.starts_with? flds, sfld do
+          with one <- String.trim_leading(flds, sfld),
+               two <- sfld,
+          do: Map.merge note, %{one: one, two: two}
+        else
+          raise "Not matched! #{flds} and #{sfld}"
+        end
+      end
+    end
+    @doc"""
+    iex>handle_unwanted_chars("สัปดาห์<br><br>sàp-daa[sound:380625.mp3]<img src='22019_96square.jpg'><br><br>week")
+    "สัปดาห์sàp-daaweek"
+    iex>handle_unwanted_chars("สัปดาห์sàp-daa[sound:380625.mp3]")
+    "สัปดาห์sàp-daa"
+    iex>handle_unwanted_chars(<<224, 184, 170, 224, 184, 177, 224, 184, 155, 224, 184, 148, 224, 184, 178, 224, 184, 171, 224, 185, 140, 60, 98, 114, 62, 60, 98, 114, 62, 115, 195, 160, 112, 45, 100, 97, 97, 91, 115, 111, 117, 110, 100, 58, 51, 56, 48, 54, 50, 53, 46, 109, 112, 51, 93, 31, 60, 105, 109, 103, 32, 115, 114, 99, 61, 39, 50, 50, 48, 49, 57, 95, 57, 54, 115, 113, 117, 97, 114, 101, 46, 106, 112, 103, 39, 62, 60, 98, 114, 62, 60, 98, 114, 62, 119, 101, 101, 107>>)
+    "สัปดาห์sàp-daaweek"
+    iex>handle_unwanted_chars(" 22028_96square.jpg March")
+    "March"
+    """
+    def handle_unwanted_chars(str) do
+      str
+      |> String.replace(~r"<.*?>", "") # remove html
+      |> String.replace(~r"\[sound:.*?\]", "") # remove sound
+      |> String.replace(~r"\s\S.*?\.jpg\s", "") # remove img references
+      |> String.replace(~r"&nbsp;", " ") # replace unwanted &nbsp; with a space
+      |> String.codepoints
+      |> Enum.filter(&(&1 != <<31>>))
+      |> List.to_string
     end
   end
 end

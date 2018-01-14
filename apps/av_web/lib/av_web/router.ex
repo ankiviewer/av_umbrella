@@ -39,6 +39,7 @@ defmodule AvWeb.Router do
 
   scope "/api", AvWeb do
     pipe_through :api
+    # TODO: add auth
 
     get "/deck", HomeController, :updated_at
     get "/collection", SearchController, :collection

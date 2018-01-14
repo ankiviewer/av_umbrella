@@ -1,5 +1,6 @@
 defmodule Av.AnkiTest do
   use Av.DataCase, async: false
+  doctest Av.Anki.Note, import: true
 
   require Poison
   alias Av.Anki.{Collection, Model, Deck, Note, Helpers}

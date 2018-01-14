@@ -1,6 +1,16 @@
 defmodule AvWeb.SearchControllerTest do
   use AvWeb.ConnCase
 
+  defp extra_fields(%{"flds" => flds, "sfld" => sfld} = note) do
+    if String.ends_with? flds, sfld do
+      with one <- String.trim_trailing(flds, sfld),
+           two <- sfld,
+      do: Map.merge note, %{"one" => one, "two" => two}
+    else
+      raise "Not matched! #{flds} and #{sfld}"
+    end
+  end
+
   describe "collection" do
     test "without Collection" do
       conn = get build_conn(), "/api/collection"
@@ -169,6 +179,8 @@ defmodule AvWeb.SearchControllerTest do
           "type" => 2
         }
       ]
+      payload = Enum.map payload, &(Map.merge &1, %{"ttype" => &1["type"]})
+      payload = Enum.map payload, &extra_fields/1
       expected = %{"error" => "", "payload" => payload}
 
       assert actual == expected

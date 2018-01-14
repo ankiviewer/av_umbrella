@@ -5,21 +5,13 @@ defmodule AvWeb.SearchController do
     render conn, "index.html"
   end
 
-  def sanitize_struct(struct) when is_map(struct) do
-    struct = Map.drop struct, [:__struct__, :__meta__, :id]
-    # elm can't handle json key of :type
-    if Map.has_key? struct, :type do
-      Map.merge struct, %{ttype: struct.type}
-    else
-       struct
-    end
-  end
+  def sanitize_struct(struct) when is_map(struct),
+    do: Map.drop struct, [:__struct__, :__meta__, :id]
   def sanitize_struct(struct) when is_nil(struct),
     do: nil
   def sanitize_struct(struct) when is_list(struct),
     do: Enum.map struct, &sanitize_struct/1
 
-  # TODO: add auth
   def collection(conn, _params) do
     collection = Collection |> Repo.one |> sanitize_struct
     models = Model |> Repo.all |> sanitize_struct
@@ -39,7 +31,7 @@ defmodule AvWeb.SearchController do
   end
 
   def notes(conn, _params) do
-    case notes = Note |> Repo.all |> sanitize_struct do
+    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize do
       [] ->
         json conn, %{payload: nil, error: "Notes not loaded"}
       _ ->
