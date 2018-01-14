@@ -3,69 +3,73 @@ defmodule Av.TestHelpers do
   alias Av.Anki.{Collection, Model, Note, Deck}
 
   @valid_user_attrs %{name: "sam", password: "password"}
-  @valid_collection_attrs %{"crt" => 1111111111, "mod" => 1111111111111, "tags" => %{"hello" => 0, "world" => 0}}
+  @valid_collection_attrs %{
+    "crt" => 1_111_111_111,
+    "mod" => 1_111_111_111_111,
+    "tags" => %{"hello" => 0, "world" => 0}
+  }
   @valid_model_attrs [
     %{
       "name" => "Basic (and reversed card)",
       "did" => 1,
       "flds" => [
-        %{ "name" => "Front", "ord" => 0 },
-        %{ "name" => "Back", "ord" => 1 }
+        %{"name" => "Front", "ord" => 0},
+        %{"name" => "Back", "ord" => 1}
       ],
-      "mod" => 1507832120,
-      "id" => 1507832105615
+      "mod" => 1_507_832_120,
+      "id" => 1_507_832_105_615
     },
     %{
       "name" => "en_de",
-      "did" => 1482060876072,
+      "did" => 1_482_060_876_072,
       "flds" => [
-        %{ "name" => "English", "ord" => 0 },
-        %{ "name" => "German", "ord" => 1 },
-        %{ "name" => "Hint", "ord" => 2 }
+        %{"name" => "English", "ord" => 0},
+        %{"name" => "German", "ord" => 1},
+        %{"name" => "Hint", "ord" => 2}
       ],
-      "mod" => 1498897458,
-      "id" => 1482844395181
+      "mod" => 1_498_897_458,
+      "id" => 1_482_844_395_181
     },
     %{
       "name" => "de_reverse",
-      "did" => 1482060876072,
+      "did" => 1_482_060_876_072,
       "flds" => [
-        %{ "name" => "German", "ord" => 0 },
-        %{ "name" => "English", "ord" => 1 },
-        %{ "name" => "Hint", "ord" => 2 }
+        %{"name" => "German", "ord" => 0},
+        %{"name" => "English", "ord" => 1},
+        %{"name" => "Hint", "ord" => 2}
       ],
-      "mod" => 1514653350,
-      "id" => 1482842770192
+      "mod" => 1_514_653_350,
+      "id" => 1_482_842_770_192
     }
   ]
   @valid_deck_attrs [
     %{
       "name" => "Default",
-      "mod" => 1482840611,
+      "mod" => 1_482_840_611,
       "id" => 1
     },
     %{
       "name" => "DE",
-      "mod" => 1514645269,
-      "id" => 1482060876072
+      "mod" => 1_514_645_269,
+      "id" => 1_482_060_876_072
     },
     %{
       "name" => "Thai",
-      "mod" => 1514645455,
-      "id" => 1503955755113
+      "mod" => 1_514_645_455,
+      "id" => 1_503_955_755_113
     }
   ]
   @valid_note_attrs [
     %{
-      "cid" => 1506600429296,
-      "nid" => 1506600417828,
-      "cmod" => 1510927123,
-      "nmod" => 1506600429,
-      "mid" => 1482842770192,
+      "cid" => 1_506_600_429_296,
+      "nid" => 1_506_600_417_828,
+      "cmod" => 1_510_927_123,
+      "nmod" => 1_506_600_429,
+      "mid" => 1_482_842_770_192,
       "tags" => "",
       "flds" => "Unnützunuseful",
       "sfld" => "unuseful",
-      "did" => 1482060876072,
+      "did" => 1_482_060_876_072,
       "ord" => 0,
       "type" => 2,
       "queue" => 2,
@@ -74,15 +78,15 @@ defmodule Av.TestHelpers do
       "lapses" => 0
     },
     %{
-      "cid" => 1506600429297,
-      "nid" => 1506600417828,
-      "cmod" => 1514058424,
-      "nmod" => 1506600429,
-      "mid" => 1482842770192,
+      "cid" => 1_506_600_429_297,
+      "nid" => 1_506_600_417_828,
+      "cmod" => 1_514_058_424,
+      "nmod" => 1_506_600_429,
+      "mid" => 1_482_842_770_192,
       "tags" => "",
       "flds" => "Unnützunuseful",
       "sfld" => "unuseful",
-      "did" => 1482060876072,
+      "did" => 1_482_060_876_072,
       "ord" => 1,
       "type" => 2,
       "queue" => 2,
@@ -91,15 +95,15 @@ defmodule Av.TestHelpers do
       "lapses" => 2
     },
     %{
-      "cid" => 1506600538241,
-      "nid" => 1506600526101,
-      "cmod" => 1510071661,
-      "nmod" => 1506600538,
-      "mid" => 1482842770192,
+      "cid" => 1_506_600_538_241,
+      "nid" => 1_506_600_526_101,
+      "cmod" => 1_510_071_661,
+      "nmod" => 1_506_600_538,
+      "mid" => 1_482_842_770_192,
       "tags" => "",
       "flds" => "reizento irritate (skin)",
       "sfld" => "to irritate (skin)",
-      "did" => 1482060876072,
+      "did" => 1_482_060_876_072,
       "ord" => 0,
       "type" => 2,
       "queue" => 2,
@@ -108,15 +112,15 @@ defmodule Av.TestHelpers do
       "lapses" => 0
     },
     %{
-      "cid" => 1506600538242,
-      "nid" => 1506600526101,
-      "cmod" => 1514507902,
-      "nmod" => 1506600538,
-      "mid" => 1482842770192,
+      "cid" => 1_506_600_538_242,
+      "nid" => 1_506_600_526_101,
+      "cmod" => 1_514_507_902,
+      "nmod" => 1_506_600_538,
+      "mid" => 1_482_842_770_192,
       "tags" => "",
       "flds" => "reizento irritate (skin)",
       "sfld" => "to irritate (skin)",
-      "did" => 1482060876072,
+      "did" => 1_482_060_876_072,
       "ord" => 1,
       "type" => 2,
       "queue" => 2,

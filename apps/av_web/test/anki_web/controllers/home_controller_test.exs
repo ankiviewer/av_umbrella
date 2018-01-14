@@ -15,7 +15,7 @@ defmodule AvWeb.HomeControllerTest do
 
       conn = get build_conn(), "/api/deck"
       actual = json_response conn, 200
-      expected = %{"error" => false, "mod" => 1111111111}
+      expected = %{"error" => false, "mod" => 1_111_111_111}
 
       assert actual == expected
     end

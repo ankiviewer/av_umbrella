@@ -1,7 +1,10 @@
 defmodule Av.User do
   use Ecto.Schema
   import Ecto.Changeset
+
   alias Av.User
+  alias Ecto.Changeset
+  alias Comeonin.Bcrypt
 
   schema "users" do
     field :is_admin, :boolean, default: false
@@ -30,11 +33,11 @@ defmodule Av.User do
 
   defp hash_password(changeset) do
     case changeset do
-      %Ecto.Changeset{valid?: true,
+      %Changeset{valid?: true,
                       changes: %{password: password}} ->
         put_change(changeset,
                    :password_hash,
-                   Comeonin.Bcrypt.hashpwsalt(password))
+                   Bcrypt.hashpwsalt(password))
       _ ->
         changeset
     end

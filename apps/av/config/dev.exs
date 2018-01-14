@@ -1,6 +1,5 @@
 use Mix.Config
 
-# Configure your database
 config :av, Av.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",

@@ -4,8 +4,7 @@ defmodule AvWeb.Auth.Pipeline do
     error_handler: AvWeb.Auth.ErrorHandler,
     module: AvWeb.Auth.Guardian
 
-	plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}
+  plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}
   plug Guardian.Plug.VerifyHeader, claims: %{"typ" => "access"}
   plug Guardian.Plug.LoadResource, allow_blank: true
 end
-

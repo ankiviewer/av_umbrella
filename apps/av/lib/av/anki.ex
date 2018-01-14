@@ -123,7 +123,11 @@ defmodule Av.Anki do
       |> validate_required(@attrs |> List.delete(:tags))
     end
     defp format(%{"flds" => flds, "sfld" => sfld} = note) do
-      note = %{ note | "flds" => handle_unwanted_chars(flds) , "sfld" => handle_unwanted_chars(sfld)}
+      note = %{
+        note |
+        "flds" => handle_unwanted_chars(flds),
+        "sfld" => handle_unwanted_chars(sfld)
+      }
       size_integer note
     end
     def sanitize(notes) do

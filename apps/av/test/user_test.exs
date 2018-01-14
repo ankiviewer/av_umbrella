@@ -3,6 +3,8 @@ defmodule Av.UserTest do
 
   describe "users" do
     alias Av.User
+    alias Comeonin.Bcrypt
+    alias Ecto.ConstraintError
 
     @valid_attrs %{name: "sam", password: "password"}
     @update_attrs %{name: "sam2", password: "password"}
@@ -14,7 +16,7 @@ defmodule Av.UserTest do
       assert changeset.valid?
       assert changeset.changes.name == @valid_attrs.name
       assert changeset.changes.password == @valid_attrs.password
-      assert Comeonin.Bcrypt.checkpw(@valid_attrs.password, changeset.changes.password_hash)
+      assert Bcrypt.checkpw(@valid_attrs.password, changeset.changes.password_hash)
     end
 
     test "non unique name" do
@@ -23,7 +25,7 @@ defmodule Av.UserTest do
       changeset = %User{} |> User.registration_changeset(@valid_attrs)
 
       assert changeset.valid?
-      assert_raise Ecto.ConstraintError, fn ->
+      assert_raise ConstraintError, fn ->
         Repo.insert!(changeset)
       end
     end

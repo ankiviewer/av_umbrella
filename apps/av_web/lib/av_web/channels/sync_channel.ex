@@ -74,7 +74,7 @@ defmodule AvWeb.SyncChannel do
 
   def terminate(reason, _socket) do
     IO.puts "Leaving..."
-    IO.inspect reason
+    IO.puts reason
     :ok
   end
 end

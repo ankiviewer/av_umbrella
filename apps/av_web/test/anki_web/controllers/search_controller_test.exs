@@ -50,21 +50,21 @@ defmodule AvWeb.SearchControllerTest do
       actual = json_response conn, 200
       payload = %{
         "collection" => %{
-          "crt" => 1111111111,
-          "mod" => 1111111111,
+          "crt" => 1_111_111_111,
+          "mod" => 1_111_111_111,
           "tags" => ["hello", "world"]
         },
         "decks" => [
           %{"did" => 1,
-            "mod" => 1482840611,
+            "mod" => 1_482_840_611,
             "name" => "Default"
           },
-          %{"did" => 1482060876,
-            "mod" => 1514645269,
+          %{"did" => 1_482_060_876,
+            "mod" => 1_514_645_269,
             "name" => "DE"
           },
-          %{"did" => 1503955755,
-            "mod" => 1514645455,
+          %{"did" => 1_503_955_755,
+            "mod" => 1_514_645_455,
             "name" => "Thai"
           }
         ],
@@ -72,20 +72,20 @@ defmodule AvWeb.SearchControllerTest do
           %{
             "did" => 1,
             "flds" => ["Front", "Back"],
-            "mid" => 1507832105,
-            "mod" => 1507832120
+            "mid" => 1_507_832_105,
+            "mod" => 1_507_832_120
           },
           %{
-            "did" => 1482060876,
+            "did" => 1_482_060_876,
             "flds" => ["English", "German", "Hint"],
-            "mid" => 1482844395,
-            "mod" => 1498897458
+            "mid" => 1_482_844_395,
+            "mod" => 1_498_897_458
           },
           %{
-            "did" => 1482060876,
+            "did" => 1_482_060_876,
             "flds" => ["German", "English", "Hint"],
-            "mid" => 1482842770,
-            "mod" => 1514653350
+            "mid" => 1_482_842_770,
+            "mod" => 1_514_653_350
           }
         ]
       }
@@ -111,15 +111,15 @@ defmodule AvWeb.SearchControllerTest do
       actual = json_response conn, 200
       payload = [
         %{
-          "cid" => 1506600429,
-          "cmod" => 1510927123,
-          "did" => 1482060876,
+          "cid" => 1_506_600_429,
+          "cmod" => 1_510_927_123,
+          "did" => 1_482_060_876,
           "due" => 412,
           "flds" => "Unnützunuseful",
           "lapses" => 0,
-          "mid" => 1482842770,
-          "nid" => 1506600417,
-          "nmod" => 1506600429,
+          "mid" => 1_482_842_770,
+          "nid" => 1_506_600_417,
+          "nmod" => 1_506_600_429,
           "ord" => 0,
           "queue" => 2,
           "reps" => 6,
@@ -128,15 +128,15 @@ defmodule AvWeb.SearchControllerTest do
           "type" => 2
         },
         %{
-          "cid" => 1506600429,
-          "cmod" => 1514058424,
-          "did" => 1482060876,
+          "cid" => 1_506_600_429,
+          "cmod" => 1_514_058_424,
+          "did" => 1_482_060_876,
           "due" => 417,
           "flds" => "Unnützunuseful",
           "lapses" => 2,
-          "mid" => 1482842770,
-          "nid" => 1506600417,
-          "nmod" => 1506600429,
+          "mid" => 1_482_842_770,
+          "nid" => 1_506_600_417,
+          "nmod" => 1_506_600_429,
           "ord" => 1,
           "queue" => 2,
           "reps" => 13,
@@ -145,15 +145,15 @@ defmodule AvWeb.SearchControllerTest do
           "type" => 2
         },
         %{
-          "cid" => 1506600538,
-          "cmod" => 1510071661,
-          "did" => 1482060876,
+          "cid" => 1_506_600_538,
+          "cmod" => 1_510_071_661,
+          "did" => 1_482_060_876,
           "due" => 392,
           "flds" => "reizento irritate (skin)",
           "lapses" => 0,
-          "mid" => 1482842770,
-          "nid" => 1506600526,
-          "nmod" => 1506600538,
+          "mid" => 1_482_842_770,
+          "nid" => 1_506_600_526,
+          "nmod" => 1_506_600_538,
           "ord" => 0,
           "queue" => 2,
           "reps" => 7,
@@ -162,15 +162,15 @@ defmodule AvWeb.SearchControllerTest do
           "type" => 2
         },
         %{
-          "cid" => 1506600538,
-          "cmod" => 1514507902,
-          "did" => 1482060876,
+          "cid" => 1_506_600_538,
+          "cmod" => 1_514_507_902,
+          "did" => 1_482_060_876,
           "due" => 390,
           "flds" => "reizento irritate (skin)",
           "lapses" => 5,
-          "mid" => 1482842770,
-          "nid" => 1506600526,
-          "nmod" => 1506600538,
+          "mid" => 1_482_842_770,
+          "nid" => 1_506_600_526,
+          "nmod" => 1_506_600_538,
           "ord" => 1,
           "queue" => 2,
           "reps" => 28,

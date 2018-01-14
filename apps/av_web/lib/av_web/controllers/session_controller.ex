@@ -4,7 +4,7 @@ defmodule AvWeb.SessionController do
   alias AvWeb.Auth
 
   plug :scrub_params, "session" when action in ~w(create)a
-	plug :put_layout, "login.html"
+  plug :put_layout, "login.html"
 
   def new(conn, _) do
     render conn, "new.html"
@@ -32,4 +32,3 @@ defmodule AvWeb.SessionController do
     |> redirect(to: home_path(conn, :index))
   end
 end
-
