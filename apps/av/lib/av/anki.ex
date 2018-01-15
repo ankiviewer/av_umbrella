@@ -52,6 +52,7 @@ defmodule Av.Anki do
       field :did, :integer # deck id
       field :flds, {:array, :string} # e.g. {"Front", "Back"}
       field :mod, :integer # last modified at
+      field :name, :string # name of model
     end
 
     @attrs ~w(mid did flds mod)a

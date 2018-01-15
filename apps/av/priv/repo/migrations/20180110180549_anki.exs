@@ -13,6 +13,7 @@ defmodule Av.Repo.Migrations.Anki do
       add :did, :integer
       add :flds, {:array, :string}
       add :mod, :integer
+      add :name, :string
     end
 
     create table(:decks) do
