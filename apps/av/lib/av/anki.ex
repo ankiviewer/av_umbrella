@@ -55,7 +55,7 @@ defmodule Av.Anki do
       field :name, :string # name of model
     end
 
-    @attrs ~w(mid did flds mod)a
+    @attrs ~w(mid did flds mod name)a
     def changeset(%Model{} = model, attrs) do
       model
       |> cast(format(attrs), @attrs)
