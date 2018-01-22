@@ -140,14 +140,14 @@ defmodule Av.Anki do
     end
     def extra_fields(%{flds: flds, sfld: sfld} = note) do
       if String.ends_with? flds, sfld do
-        with one <- String.trim_trailing(flds, sfld),
-             two <- sfld,
-        do: Map.merge note, %{one: one, two: two}
+        with front <- String.trim_trailing(flds, sfld),
+             back <- sfld,
+        do: Map.merge note, %{front: front, back: back}
       else
         if String.starts_with? flds, sfld do
-          with one <- String.trim_leading(flds, sfld),
-               two <- sfld,
-          do: Map.merge note, %{one: one, two: two}
+          with front <- String.trim_leading(flds, sfld),
+               back <- sfld,
+          do: Map.merge note, %{front: front, back: back}
         else
           raise "Not matched! #{flds} and #{sfld}"
         end
