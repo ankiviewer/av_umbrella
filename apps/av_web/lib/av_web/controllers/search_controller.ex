@@ -30,19 +30,8 @@ defmodule AvWeb.SearchController do
     end
   end
 
-  def strip([ head | tail ], acc \\ []) do
-    if tail == [] do
-      acc
-    else if acc |> Enum.filter(&(&1.mid == head.mid)) |> length == 5 do
-        strip tail, acc
-      else
-        strip tail, (acc ++ [head])
-      end
-    end
-  end
-
   def notes(conn, _params) do
-    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize |> strip do
+    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize do
       [] ->
         json conn, %{payload: nil, error: "Notes not loaded"}
       _ ->
