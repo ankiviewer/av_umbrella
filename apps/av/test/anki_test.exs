@@ -106,4 +106,22 @@ defmodule Av.AnkiTest do
       end
     end
   end
+
+  describe "extra_fields" do
+    test "starts_with?" do
+      note = %{flds: "the sidedie Seite", sfld: "the side"}
+      actual = Note.extra_fields note
+
+      assert actual.front == "the side"
+      assert actual.back == "die Seite"
+    end
+
+    test "ends_with?" do
+      note = %{flds: "die Seitethe side/ page", sfld: "the side/ page"}
+      actual = Note.extra_fields note
+
+      assert actual.front == "die Seite"
+      assert actual.back == "the side/ page"
+    end
+  end
 end

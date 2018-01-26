@@ -145,8 +145,8 @@ defmodule Av.Anki do
         do: Map.merge note, %{front: front, back: back}
       else
         if String.starts_with? flds, sfld do
-          with front <- String.trim_leading(flds, sfld),
-               back <- sfld,
+          with back <- String.trim_leading(flds, sfld),
+               front <- sfld,
           do: Map.merge note, %{front: front, back: back}
         else
           raise "Not matched! #{flds} and #{sfld}"
