@@ -31,11 +31,27 @@ defmodule AvWeb.SearchController do
   end
 
   def notes(conn, _params) do
-    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize do
+    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize |> strip do
       [] ->
         json conn, %{payload: nil, error: "Notes not loaded"}
       _ ->
         json conn, %{payload: notes, error: ""}
+    end
+  end
+
+  @doc"""
+  Reduces the notes list down to just 5 of each mid
+  """
+  def strip(ns, acc \\ [])
+  def strip([], acc), do: acc
+  def strip([head | tail], acc) do
+    acc
+    |> Enum.filter(&(&1.mid == head.mid))
+    |> length
+    |> Kernel.==(5)
+    |> case do
+      true -> strip tail, acc
+      false -> strip tail, acc ++ [head]
     end
   end
 end

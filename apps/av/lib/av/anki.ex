@@ -143,8 +143,7 @@ defmodule Av.Anki do
         with front <- String.trim_trailing(flds, sfld),
              back <- sfld,
         do: Map.merge note, %{front: front, back: back}
-      else
-        if String.starts_with? flds, sfld do
+      else if String.starts_with? flds, sfld do
           with back <- String.trim_leading(flds, sfld),
                front <- sfld,
           do: Map.merge note, %{front: front, back: back}

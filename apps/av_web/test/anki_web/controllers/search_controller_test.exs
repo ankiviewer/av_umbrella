@@ -1,13 +1,20 @@
 defmodule AvWeb.SearchControllerTest do
   use AvWeb.ConnCase
 
+  import AvWeb.SearchController, only: [strip: 1]
+
   defp extra_fields(%{"flds" => flds, "sfld" => sfld} = note) do
     if String.ends_with? flds, sfld do
-      with one <- String.trim_trailing(flds, sfld),
-           two <- sfld,
-      do: Map.merge note, %{"one" => one, "two" => two}
-    else
-      raise "Not matched! #{flds} and #{sfld}"
+      with front <- String.trim_trailing(flds, sfld),
+           back <- sfld,
+      do: Map.merge note, %{"front" => front, "back" => back}
+      else if String.starts_with? flds, sfld do
+        with back <- String.trim_leading(flds, sfld),
+             front <- sfld,
+        do: Map.merge note, %{front: front, back: back}
+      else
+        raise "Not matched! #{flds} and #{sfld}"
+      end
     end
   end
 
@@ -73,19 +80,22 @@ defmodule AvWeb.SearchControllerTest do
             "did" => 1,
             "flds" => ["Front", "Back"],
             "mid" => 1_507_832_105,
-            "mod" => 1_507_832_120
+            "mod" => 1_507_832_120,
+            "name" => "Basic (and reversed card)",
           },
           %{
             "did" => 1_482_060_876,
             "flds" => ["English", "German", "Hint"],
             "mid" => 1_482_844_395,
-            "mod" => 1_498_897_458
+            "mod" => 1_498_897_458,
+            "name" => "en_de",
           },
           %{
             "did" => 1_482_060_876,
             "flds" => ["German", "English", "Hint"],
             "mid" => 1_482_842_770,
-            "mod" => 1_514_653_350
+            "mod" => 1_514_653_350,
+            "name" => "de_reverse"
           }
         ]
       }
@@ -184,6 +194,24 @@ defmodule AvWeb.SearchControllerTest do
       expected = %{"error" => "", "payload" => payload}
 
       assert actual == expected
+    end
+  end
+
+  describe "strip" do
+    test "returns only 5 unique mid's" do
+      input = 1..6
+      |> Enum.map(fn _n -> %{mid: 1} end)
+
+      assert length(strip input) == 5
+    end
+
+    test "returns only 5 unique mid's with multiple mids inputted" do
+      input = 1..6
+      |> Enum.map(fn _n -> %{mid: 1} end)
+      |> Enum.concat(Enum.map 1..3, fn _n -> %{mid: 2} end)
+
+      assert length(input) == 9
+      assert length(strip input) == 8
     end
   end
 end
