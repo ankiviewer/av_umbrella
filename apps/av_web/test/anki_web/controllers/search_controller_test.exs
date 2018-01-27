@@ -1,7 +1,7 @@
 defmodule AvWeb.SearchControllerTest do
   use AvWeb.ConnCase
 
-  import AvWeb.SearchController, only: [strip: 1]
+  import AvWeb.SearchController, only: [strip: 1, valid_tags?: 2]
 
   defp extra_fields(%{"flds" => flds, "sfld" => sfld} = note) do
     if String.ends_with? flds, sfld do
@@ -108,7 +108,7 @@ defmodule AvWeb.SearchControllerTest do
 
   describe "notes" do
     test "without notes" do
-      conn = get build_conn(), "/api/notes"
+      conn = get build_conn(), "/api/notes?decks=&models=&search=&tags="
       actual = json_response conn, 200
       expected = %{"error" => "Notes not loaded", "payload" => nil}
 
@@ -117,7 +117,7 @@ defmodule AvWeb.SearchControllerTest do
 
     test "with notes" do
       insert_notes()
-      conn = get build_conn(), "/api/notes"
+      conn = get build_conn(), "/api/notes?decks=1482060876&models=1482842770&search=&tags="
       actual = json_response conn, 200
       payload = [
         %{
@@ -212,6 +212,14 @@ defmodule AvWeb.SearchControllerTest do
 
       assert length(input) == 9
       assert length(strip input) == 8
+    end
+  end
+
+  describe "valid_tags?" do
+    test "first" do
+      note_tags = " first "
+      param_tags = ["first"]
+      assert valid_tags? note_tags, param_tags
     end
   end
 end

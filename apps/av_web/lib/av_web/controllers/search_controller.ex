@@ -47,18 +47,73 @@ defmodule AvWeb.SearchController do
     end
   end
 
-  def filterNotes([head | tail], %{"decks" => decks, "models" => models, "search" => search, "tags" => tags} = params, acc \\ []) do
+  def valid_tags?(_, [""]), do: true
+  def valid_tags?(nil, _), do: true
+  def valid_tags?(note_tags, param_tags) do
+    note_tags
+    |> String.trim
+    |> String.split(" ")
+    |> Enum.map(&String.trim/1)
+    |> Enum.any?(&(&1 in param_tags))
+  end
+
+  def valid_search?(%{front: front, back: back}, search) do
+    front = simplify_string(front)
+    back = simplify_string(back)
+    search = simplify_string(search)
+
+    front =~ search or back =~ search
+  end
+
+  def simplify_string(str) do
+    str
+    |> String.downcase
+    |> String.codepoints
+    |> Enum.map(&char_map/1)
+    |> Enum.join
+  end
+
+  def char_map(c) do
+    case c do
+      "ä" -> "a"
+      "ö" -> "o"
+      "ü" -> "u"
+      "ß" -> "s"
+      c -> c
+    end
+  end
+
+  def parseTags(nil),
+    do: [""]
+  def parseTags(tags) do
+    tags |> String.split(",") |> Enum.map(&String.trim/1)
+  end
+
+  def include?(head, decks, models, tags, search) do
+    head.did in decks and head.mid in models and valid_tags?(head.tags, tags) and valid_search? head, search
+  end
+
+  def sanitize_search(str) do
+    String.replace str, "%20", " "
+  end
+
+  def filterNotes(notes, params, acc \\ [])
+  def filterNotes([], _params, acc),
+    do: acc
+  def filterNotes([head | tail], %{"decks" => decks, "models" => models, "search" => search, "tags" => tags} = params, acc) do
     with decks <- parseParams(decks),
          models <- parseParams(models),
-         tags <- String.split(tags, ",")
+         tags <- parseTags(tags),
+         search <- sanitize_search(search)
     do
-      if length(acc) == 50 or tail == [] do
-        acc
-      else if head.did in decks and head.mid in models do
-          filterNotes tail, params, acc ++ [head]
+      if include? head, decks, models, tags, search do
+        if length(acc) == 50 or tail == [] do
+          acc ++ [head]
         else
-          filterNotes tail, params, acc
+          filterNotes tail, params, acc ++ [head]
         end
+      else
+        filterNotes tail, params, acc
       end
     end
   end
