@@ -30,17 +30,41 @@ defmodule AvWeb.SearchController do
     end
   end
 
-  def notes(conn, _params) do
-    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize |> strip do
+  def notes(conn, params) do
+    case notes = Note |> Repo.all |> sanitize_struct |> Note.sanitize do
       [] ->
         json conn, %{payload: nil, error: "Notes not loaded"}
       _ ->
+        notes = filterNotes notes, params
         json conn, %{payload: notes, error: ""}
     end
   end
 
+  def parseParams(params) do
+    case String.split params, "," do
+      [""] -> []
+      params -> Enum.map params, &String.to_integer/1
+    end
+  end
+
+  def filterNotes([head | tail], %{"decks" => decks, "models" => models, "search" => search, "tags" => tags} = params, acc \\ []) do
+    with decks <- parseParams(decks),
+         models <- parseParams(models),
+         tags <- String.split(tags, ",")
+    do
+      if length(acc) == 50 or tail == [] do
+        acc
+      else if head.did in decks and head.mid in models do
+          filterNotes tail, params, acc ++ [head]
+        else
+          filterNotes tail, params, acc
+        end
+      end
+    end
+  end
+
   @doc"""
-  Reduces the notes list down to just 5 of each mid
+  Reduces the notes list down to just 5 of each mid for test purpose
   """
   def strip(ns, acc \\ [])
   def strip([], acc), do: acc
