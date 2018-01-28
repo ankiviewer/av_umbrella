@@ -22,7 +22,8 @@ defmodule Av.DataCase do
       import Av.DataCase
 
       import Av.TestHelpers
-      alias Av.Repo
+      alias Av.{Repo, Rule}
+      alias Av.Anki.{Collection, Model, Deck, Note, Helpers}
     end
   end
 

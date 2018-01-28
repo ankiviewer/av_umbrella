@@ -3,7 +3,6 @@ defmodule Av.AnkiTest do
   doctest Av.Anki.Note, import: true
 
   require Poison
-  alias Av.Anki.{Collection, Model, Deck, Note, Helpers}
 
   @nodeapp __DIR__ <> "/../../../../nodeapp"
   @models @nodeapp <> "/test/models.json"

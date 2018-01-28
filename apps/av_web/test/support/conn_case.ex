@@ -21,6 +21,7 @@ defmodule AvWeb.ConnCase do
       use Phoenix.ConnTest
       import AvWeb.Router.Helpers
       import Av.TestHelpers
+      alias Av.{Rule, Repo}
 
       # The default endpoint for testing
       @endpoint AvWeb.Endpoint
