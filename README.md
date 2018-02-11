@@ -3,6 +3,10 @@
 
 # Av.Umbrella
 
+# Abandoned
+
+In favor of [ankiviewer](https://github.com/ankiviewer/ankiviewer)
+
 An interface for managing an Anki sqlite database
 
 # Av
