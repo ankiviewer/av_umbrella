@@ -1,21 +1,32 @@
 defmodule AvWeb.RulesController do
   use AvWeb, :controller
 
+  alias Av.{Rule, Note}
+
   def index(conn, _params) do
     render conn, "index.html"
   end
 
   # TODO: make this channel instead
   def rules_sync(conn, %{"id" => id}) do
-    conn
+    notes = Note.all()
+    notes
+    |> Enum.map(fn note ->
+      id
+      |> Rule.rule(notes, note)
+      |> Map.merge(%{nid: note.nid})
+      |> Rule.insert!
+    end)
+    payload = %{}
+    json conn, %{payload: payload, error: ""}
   end
 
   def rules(conn, %{"id" => id}) do
-    json conn %{payload: payload, error: ""}
-  end
+    all = id
+    |> Rule.all
+    |> List.filter(&(&1.fail))
+    list = Rule.list()
 
-  def rules(conn, _params) do
-    payload = %{}
-    json conn %{payload: payload, error: ""}
+    json conn, %{payload: %{all: all, list: list}, error: ""}
   end
 end

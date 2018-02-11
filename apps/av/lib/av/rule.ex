@@ -3,8 +3,7 @@ defmodule Av.Rule do
   import Ecto.Changeset
   import Ecto.Query
 
-  alias Av.{Rule, Repo}
-  alias Av.Anki.Note
+  alias Av.{Rule, Repo, Anki.Note}
 
   schema "rules" do
     field :comment, :string
@@ -24,9 +23,8 @@ defmodule Av.Rule do
     |> validate_required(@required_fields)
   end
 
-  def insert!(%{notes: notes, note: note, rid: rid}) do
-    %Rule{nid: note.nid, rid: rid}
-    |> Map.merge(rule rid, notes, note)
+  def insert!(%Rule{} = rule) do
+    rule
     |> changeset
     |> Repo.insert!
   end
@@ -46,9 +44,9 @@ defmodule Av.Rule do
   def all(rid) do
     Rule
     |> where([r], r.rid == ^rid)
-    |> join(:inner, [r], c in Note)
+    |> join(:inner, [r], n in Note)
     |> where([r, n], r.nid == n.nid)
-    |> select([r, n], %{rid: r.rid, fail: r.fail, front: n.sfld})
+    |> select([r, n], %{name: name, fail: r.fail, front: n.sfld})
     |> Repo.all
   end
 
@@ -74,7 +72,7 @@ defmodule Av.Rule do
           n.front == note.front
           and n.nid != note.nid
         end
-        %{fail: fail}
+        %{fail: fail, rid: rid}
       _ ->
         raise "Unknown rule id: #{rid}"
     end

@@ -44,5 +44,6 @@ defmodule AvWeb.Router do
     get "/deck", HomeController, :updated_at
     get "/collection", SearchController, :collection
     get "/notes", SearchController, :notes
+    post "/rules_sync", RulesController, :rules_sync
   end
 end
